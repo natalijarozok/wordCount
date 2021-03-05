@@ -16,7 +16,7 @@ public class TextParser {
     public List<String> parse() {
 
         List<String> tokens = new ArrayList<>();
-        StringTokenizer tokenizer = new StringTokenizer(_text, TEXT_DELIMITER);
+        StringTokenizer tokenizer = new StringTokenizer(_text == null ? "" : _text, TEXT_DELIMITER);
 
         while (tokenizer.hasMoreElements()) {
             tokens.add(tokenizer.nextToken());
