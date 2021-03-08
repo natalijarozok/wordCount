@@ -2,9 +2,11 @@ package com.wordCount;
 
 import com.wordCount.paramsSource.TestParamValuesSource;
 import com.wordcount.domain.WordCounter;
+import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,29 +14,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class WordCounterUnitTests {
 
     @Test
-    public void word_counting_in_a_text_made_of_words_only_is_correct() {
+    public void word_counting() {
+        String text;
+        List<String> stopWords;
+        int wordCount;
 
-        HashMap<String, Integer> params = TestParamValuesSource.getWordsOnlyParamValues();
+        HashMap<Pair<String, List<String>>, Integer> params = TestParamValuesSource.getTextParamValues();
 
-        for (Map.Entry<String, Integer> param : params.entrySet()) {
-            checkThatWordsCountIsCorrect(param.getKey(), param.getValue().intValue());
+        for (Map.Entry<Pair<String, List<String>>, Integer> param : params.entrySet()) {
+            text = param.getKey().getKey();
+            stopWords = param.getKey().getValue();
+            wordCount = param.getValue().intValue();
+            checkThatWordsCountIsCorrect(text, stopWords, wordCount);
         }
     }
 
 
-    @Test
-    public void word_counting_in_a_text_made_not_of_words_only_is_correct() {
-
-        HashMap<String, Integer> params = TestParamValuesSource.getNonWordsParamValues();
-
-        for (Map.Entry<String, Integer> param : params.entrySet()) {
-            checkThatWordsCountIsCorrect(param.getKey(), param.getValue().intValue());
-        }
-    }
-
-
-    private void checkThatWordsCountIsCorrect(String text, Integer wordCount) {
-        WordCounter sut = new WordCounter(text);
+    private void checkThatWordsCountIsCorrect(String text, List<String> stopWords, Integer wordCount) {
+        WordCounter sut = new WordCounter(text, stopWords);
         int wordNumber = sut.count();
         assertEquals(wordCount, wordNumber);
     }

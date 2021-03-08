@@ -2,21 +2,31 @@ package com.wordcount.controllers;
 
 import com.wordcount.domain.WordCounter;
 import com.wordcount.readers.ConsoleTextReader;
+import com.wordcount.readers.StopWordsReader;
 import com.wordcount.writers.AnswerWriter;
+
+import java.util.List;
 
 public class WordCounterController {
 
     private ConsoleTextReader _reader;
+    private StopWordsReader _stopWordsReader;
     private AnswerWriter _writer;
 
-    public WordCounterController(ConsoleTextReader reader, AnswerWriter writer) {
+    public WordCounterController(
+            ConsoleTextReader reader,
+            StopWordsReader stopWordsreader,
+            AnswerWriter writer
+    ) {
         _reader = reader;
+        _stopWordsReader = stopWordsreader;
         _writer = writer;
     }
 
     public void countWords() {
         String inputText = readText();
-        int wordCount = countWords(inputText);
+        List<String> stopWords = readStopWords();
+        int wordCount = countWords(inputText, stopWords);
         writeWordCount(wordCount);
     }
 
@@ -24,8 +34,12 @@ public class WordCounterController {
         return _reader.read();
     }
 
-    private int countWords(String text) {
-        WordCounter wordCounter = new WordCounter(text);
+    private List<String> readStopWords() {
+        return _stopWordsReader.read();
+    }
+
+    private int countWords(String text, List<String> stopWords) {
+        WordCounter wordCounter = new WordCounter(text, stopWords);
         return wordCounter.count();
     }
 

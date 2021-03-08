@@ -1,13 +1,20 @@
 package com.wordcount.domain;
 
+import java.util.Collections;
 import java.util.List;
 
 public class WordCounter {
 
     private TextParser _textParser;
+    private List<String> _stopWords = Collections.emptyList();
 
     public WordCounter(String text) {
         _textParser = new TextParser(text);
+    }
+
+    public WordCounter(String text, List<String> stopWords) {
+        _textParser = new TextParser(text);
+        _stopWords = stopWords;
     }
 
     public int count() {
@@ -22,7 +29,7 @@ public class WordCounter {
     private int countWords(List<String> tokens) {
         int wordCount = 0;
         for (String rawString : tokens) {
-            if (isStringAWord(rawString)) {
+            if (isStringAWord(rawString) && isWordAllowed(rawString)) {
                 wordCount++;
             }
         }
@@ -31,5 +38,9 @@ public class WordCounter {
 
     private boolean isStringAWord(String rawString) {
         return rawString != null && rawString.matches("^[a-zA-Z]*$");
+    }
+
+    private boolean isWordAllowed(String word) {
+        return !(word == null || _stopWords.contains(word));
     }
 }
