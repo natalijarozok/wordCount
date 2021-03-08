@@ -1,4 +1,4 @@
-package com.domain;
+package com.wordcount.domain;
 
 import java.util.ArrayList;
 import java.util.List;
