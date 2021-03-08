@@ -1,8 +1,8 @@
 package com.wordCount;
 
+import com.wordCount.paramsSource.TestParam;
 import com.wordCount.paramsSource.TestParamValuesSource;
 import com.wordcount.domain.WordCounter;
-import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -19,11 +19,11 @@ public class WordCounterUnitTests {
         List<String> stopWords;
         int wordCount;
 
-        HashMap<Pair<String, List<String>>, Integer> params = TestParamValuesSource.getTextParamValues();
+        HashMap<TestParam, Integer> params = TestParamValuesSource.getTextParamValues();
 
-        for (Map.Entry<Pair<String, List<String>>, Integer> param : params.entrySet()) {
-            text = param.getKey().getKey();
-            stopWords = param.getKey().getValue();
+        for (Map.Entry<TestParam, Integer> param : params.entrySet()) {
+            text = param.getKey().getInputText();
+            stopWords = param.getKey().getStopWords();
             wordCount = param.getValue().intValue();
             checkThatWordsCountIsCorrect(text, stopWords, wordCount);
         }

@@ -6,15 +6,11 @@ import java.util.List;
 public class WordCounter {
 
     private TextParser _textParser;
-    private List<String> _stopWords = Collections.emptyList();
-
-    public WordCounter(String text) {
-        _textParser = new TextParser(text);
-    }
+    private List<String> _stopWords;
 
     public WordCounter(String text, List<String> stopWords) {
         _textParser = new TextParser(text);
-        _stopWords = stopWords;
+        _stopWords = stopWords != null ? stopWords : Collections.emptyList();
     }
 
     public int count() {
@@ -37,10 +33,10 @@ public class WordCounter {
     }
 
     private boolean isStringAWord(String rawString) {
-        return rawString != null && rawString.matches("^[a-zA-Z]*$");
+        return rawString.matches("^[a-zA-Z]*$");
     }
 
     private boolean isWordAllowed(String word) {
-        return !(word == null || _stopWords.contains(word));
+        return !_stopWords.contains(word);
     }
 }
