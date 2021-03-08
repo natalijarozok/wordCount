@@ -15,7 +15,7 @@ public class WordCounterUnitTests {
 
     @Test
     public void word_counting() {
-        String text;
+        List<String> text;
         List<String> stopWords;
         int wordCount;
 
@@ -30,10 +30,10 @@ public class WordCounterUnitTests {
     }
 
 
-    private void checkThatWordsCountIsCorrect(String text, List<String> stopWords, Integer wordCount) {
+    private void checkThatWordsCountIsCorrect(List<String> text, List<String> stopWords, Integer wordCountExpected) {
         WordCounter sut = new WordCounter(text, stopWords);
-        int wordNumber = sut.count();
-        assertEquals(wordCount, wordNumber);
+        int wordCountActual = sut.count();
+        assertEquals(wordCountExpected, wordCountActual);
     }
 
 }

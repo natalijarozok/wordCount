@@ -9,8 +9,8 @@ public class TextParser {
 
     private String _text;
 
-    TextParser(String text) {
-        _text = text != null ? text : "";
+    TextParser(List<String> text) {
+        _text = text != null ? String.join(TEXT_DELIMITER, text) : "";
     }
 
     public List<String> parse() {

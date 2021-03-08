@@ -3,9 +3,9 @@ package com.wordCount.paramsSource;
 import java.util.List;
 
 public class TestParam {
-    private String _inputText;
+    private List<String> _inputText;
 
-    public String getInputText() {
+    public List<String> getInputText() {
         return _inputText;
     }
 
@@ -15,7 +15,7 @@ public class TestParam {
         return _stopWords;
     }
 
-    public TestParam(String inputText, List<String> stopWords) {
+    public TestParam(List<String> inputText, List<String> stopWords) {
         _inputText = inputText;
         _stopWords = stopWords;
     }

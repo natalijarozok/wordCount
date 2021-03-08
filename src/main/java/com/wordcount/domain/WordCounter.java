@@ -8,7 +8,7 @@ public class WordCounter {
     private TextParser _textParser;
     private List<String> _stopWords;
 
-    public WordCounter(String text, List<String> stopWords) {
+    public WordCounter(List<String> text, List<String> stopWords) {
         _textParser = new TextParser(text);
         _stopWords = stopWords != null ? stopWords : Collections.emptyList();
     }

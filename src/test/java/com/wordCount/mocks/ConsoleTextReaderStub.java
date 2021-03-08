@@ -1,19 +1,18 @@
 package com.wordCount.mocks;
 
-import com.wordcount.readers.InputTextReader;
+import java.util.List;
 
-public class ConsoleTextReaderStub implements InputTextReader {
+public class ConsoleTextReaderStub implements TextReaderStub {
 
-    private String _inputText;
+    private List<String> _inputText;
 
     @Override
-    public String read() {
+    public List<String> read() {
         return _inputText;
     }
 
-    public void setup(String inputText) {
+    public void setup(List<String> inputText) {
         _inputText = inputText;
     }
 
-    ;
 }

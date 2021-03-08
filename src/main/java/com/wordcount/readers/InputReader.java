@@ -2,6 +2,6 @@ package com.wordcount.readers;
 
 import java.util.List;
 
-public interface StopWordsReader {
+public interface InputReader {
     List<String> read();
 }

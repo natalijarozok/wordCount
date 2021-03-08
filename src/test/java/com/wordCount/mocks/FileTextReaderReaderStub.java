@@ -2,7 +2,7 @@ package com.wordCount.mocks;
 
 import java.util.List;
 
-public class StopWordsReaderStub implements TextReaderStub {
+public class FileTextReaderReaderStub implements TextReaderStub {
 
     private List<String> _stopWords;
 
@@ -11,7 +11,6 @@ public class StopWordsReaderStub implements TextReaderStub {
         return _stopWords;
     }
 
-    @Override
     public void setup(List<String> stopWords) {
         _stopWords = stopWords;
     }

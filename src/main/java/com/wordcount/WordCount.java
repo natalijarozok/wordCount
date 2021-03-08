@@ -1,10 +1,8 @@
 package com.wordcount;
 
 import com.wordcount.controllers.WordCounterController;
-import com.wordcount.factory.InputTextReaderFactory;
-import com.wordcount.readers.InputTextReader;
-import com.wordcount.readers.StopWordsReader;
-import com.wordcount.readers.impl.StopWordsReaderImpl;
+import com.wordcount.factory.InputReaderFactory;
+import com.wordcount.readers.InputReader;
 import com.wordcount.writers.AnswerWriter;
 import com.wordcount.writers.ConsoleWriter;
 import com.wordcount.writers.impl.AnswerWriterImpl;
@@ -12,13 +10,23 @@ import com.wordcount.writers.impl.ConsoleWriterImpl;
 
 public class WordCount {
 
+    private static final String STOP_WORDS_FILE_NAME = "stopwords.txt";
+
     public static void main(String[] args) {
-        InputTextReader textReader = new InputTextReaderFactory(args[0]).create();
-        StopWordsReader stopWordsReader = new StopWordsReaderImpl();
+        InputReader textReader = new InputReaderFactory(getInputTextFileName(args)).create();
+        InputReader stopWordsReader = new InputReaderFactory(STOP_WORDS_FILE_NAME).create();
         ConsoleWriter consoleWriter = new ConsoleWriterImpl();
         AnswerWriter answerWriter = new AnswerWriterImpl(consoleWriter);
 
         WordCounterController controller = new WordCounterController(textReader, stopWordsReader, answerWriter);
         controller.countWords();
+    }
+
+    private static String getInputTextFileName(String[] args) {
+        String fileName = "";
+        if (args.length > 0) {
+            fileName = args[0];
+        }
+        return fileName;
     }
 }
