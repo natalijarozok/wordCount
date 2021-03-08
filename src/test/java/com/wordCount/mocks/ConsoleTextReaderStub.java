@@ -1,8 +1,8 @@
 package com.wordCount.mocks;
 
-import com.wordcount.readers.ConsoleTextReader;
+import com.wordcount.readers.InputTextReader;
 
-public class ConsoleTextReaderStub implements ConsoleTextReader {
+public class ConsoleTextReaderStub implements InputTextReader {
 
     private String _inputText;
 

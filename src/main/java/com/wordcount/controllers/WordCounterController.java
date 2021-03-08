@@ -1,7 +1,7 @@
 package com.wordcount.controllers;
 
 import com.wordcount.domain.WordCounter;
-import com.wordcount.readers.ConsoleTextReader;
+import com.wordcount.readers.InputTextReader;
 import com.wordcount.readers.StopWordsReader;
 import com.wordcount.writers.AnswerWriter;
 
@@ -9,12 +9,12 @@ import java.util.List;
 
 public class WordCounterController {
 
-    private ConsoleTextReader _reader;
+    private InputTextReader _reader;
     private StopWordsReader _stopWordsReader;
     private AnswerWriter _writer;
 
     public WordCounterController(
-            ConsoleTextReader reader,
+            InputTextReader reader,
             StopWordsReader stopWordsreader,
             AnswerWriter writer
     ) {

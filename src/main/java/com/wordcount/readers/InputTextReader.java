@@ -1,5 +1,5 @@
 package com.wordcount.readers;
 
-public interface ConsoleTextReader {
+public interface InputTextReader {
     String read();
 }
