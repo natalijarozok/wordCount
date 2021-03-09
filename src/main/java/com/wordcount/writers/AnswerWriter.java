@@ -1,5 +1,7 @@
 package com.wordcount.writers;
 
+import com.wordcount.domain.WordsStatistic;
+
 public interface AnswerWriter {
-    void write(int wordCount);
+    void write(WordsStatistic wordStatistics);
 }

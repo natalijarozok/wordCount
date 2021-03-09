@@ -1,16 +1,14 @@
 package com.wordCount;
 
 import com.wordCount.mocks.*;
-import com.wordCount.paramsSource.TestParam;
-import com.wordCount.paramsSource.TestParamValuesSource;
+import com.wordCount.paramsSource.TestInput;
+import com.wordCount.paramsSource.TestInputValuesSource;
 import com.wordcount.controllers.WordCounterController;
 import com.wordcount.writers.AnswerWriter;
 import com.wordcount.writers.impl.AnswerWriterImpl;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class WordCounterIntegrationTests {
 
@@ -30,17 +28,19 @@ public class WordCounterIntegrationTests {
         List<String> text;
         List<String> stopWords;
         int wordCount;
+        int uniqueWordCount;
 
         StopWordsReaderStub stopWordsReaderStub = new StopWordsReaderStub();
         ConsoleWriterSpy consoleWriterSpy = new ConsoleWriterSpy();
         AnswerWriter answerWriter = new AnswerWriterImpl(consoleWriterSpy);
 
-        HashMap<TestParam, Integer> params = TestParamValuesSource.getTextParamValues();
+        List<TestInput> params = TestInputValuesSource.getTestInputValuesWithDelimiters();
 
-        for (Map.Entry<TestParam, Integer> param : params.entrySet()) {
-            text = param.getKey().getInputText();
-            stopWords = param.getKey().getStopWords();
-            wordCount = param.getValue();
+        for (TestInput param : params) {
+            text = param.getInputText();
+            stopWords = param.getStopWords();
+            wordCount = param.getCorrectWordCount();
+            uniqueWordCount = param.getUniqueWordCount();
 
             readerStub.setup(text);
             stopWordsReaderStub.setup(stopWords);
@@ -48,7 +48,7 @@ public class WordCounterIntegrationTests {
             WordCounterController sut = new WordCounterController(readerStub, stopWordsReaderStub, answerWriter);
             sut.countWords();
 
-            consoleWriterSpy.shouldWriteText(String.format("Number of words: %d", wordCount));
+            consoleWriterSpy.shouldWriteText(String.format("Number of words: %d, unique: %d", wordCount, uniqueWordCount));
         }
     }
 }

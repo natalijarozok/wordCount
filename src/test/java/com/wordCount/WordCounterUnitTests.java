@@ -1,13 +1,12 @@
 package com.wordCount;
 
-import com.wordCount.paramsSource.TestParam;
-import com.wordCount.paramsSource.TestParamValuesSource;
+import com.wordCount.paramsSource.TestInput;
+import com.wordCount.paramsSource.TestInputValuesSource;
 import com.wordcount.domain.WordCounter;
+import com.wordcount.domain.WordsStatistic;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,22 +17,29 @@ public class WordCounterUnitTests {
         List<String> text;
         List<String> stopWords;
         int wordCount;
+        int uniqueWordCount;
+        List<TestInput> params = TestInputValuesSource.getTestInputValuesWithDelimiters();
 
-        HashMap<TestParam, Integer> params = TestParamValuesSource.getTextParamValues();
-
-        for (Map.Entry<TestParam, Integer> param : params.entrySet()) {
-            text = param.getKey().getInputText();
-            stopWords = param.getKey().getStopWords();
-            wordCount = param.getValue().intValue();
-            checkThatWordsCountIsCorrect(text, stopWords, wordCount);
+        for (TestInput param : params) {
+            text = param.getInputText();
+            stopWords = param.getStopWords();
+            wordCount = param.getCorrectWordCount();
+            uniqueWordCount = param.getUniqueWordCount();
+            checkThatWordsCountIsCorrect(text, stopWords, wordCount, uniqueWordCount);
         }
     }
 
 
-    private void checkThatWordsCountIsCorrect(List<String> text, List<String> stopWords, Integer wordCountExpected) {
+    private void checkThatWordsCountIsCorrect(
+            List<String> text,
+            List<String> stopWords,
+            int wordCountExpected,
+            int uniqueWordCountExpected
+    ) {
         WordCounter sut = new WordCounter(text, stopWords);
-        int wordCountActual = sut.count();
-        assertEquals(wordCountExpected, wordCountActual);
+        WordsStatistic wordStatistics = sut.count();
+        assertEquals(wordCountExpected, wordStatistics.getWordCount());
+        assertEquals(uniqueWordCountExpected, wordStatistics.getUniqueWordCount());
     }
 
 }

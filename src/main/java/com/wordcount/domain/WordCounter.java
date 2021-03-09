@@ -1,7 +1,9 @@
 package com.wordcount.domain;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WordCounter {
 
@@ -13,23 +15,35 @@ public class WordCounter {
         _stopWords = stopWords != null ? stopWords : Collections.emptyList();
     }
 
-    public int count() {
+    public WordsStatistic count() {
         List<String> tokens = getTokens();
-        return countWords(tokens);
+        return getStatistics(tokens);
     }
 
     private List<String> getTokens() {
         return _textParser.parse();
     }
 
-    private int countWords(List<String> tokens) {
-        int wordCount = 0;
-        for (String rawString : tokens) {
-            if (isStringAWord(rawString) && isWordAllowed(rawString)) {
-                wordCount++;
-            }
-        }
-        return wordCount;
+    private WordsStatistic getStatistics(List<String> tokens) {
+        List<String> words = getWords(tokens);
+
+        int wordCount = countWords(words);
+        int uniqueWordCount = countUniqueWords(words);
+        return new WordsStatistic(wordCount, uniqueWordCount);
+    }
+
+    private List<String> getWords(List<String> tokens) {
+        return tokens.stream()
+                .filter(token -> (isStringAWord(token) && isWordAllowed(token)))
+                .collect(Collectors.toList());
+    }
+
+    private int countUniqueWords(List<String> words) {
+        return new HashSet<>(words).size();
+    }
+
+    private int countWords(List<String> words) {
+        return words.size();
     }
 
     private boolean isStringAWord(String rawString) {
