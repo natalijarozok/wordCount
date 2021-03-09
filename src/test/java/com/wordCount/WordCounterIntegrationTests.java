@@ -29,6 +29,7 @@ public class WordCounterIntegrationTests {
         List<String> stopWords;
         int wordCount;
         int uniqueWordCount;
+        float averageWordLength;
 
         StopWordsReaderStub stopWordsReaderStub = new StopWordsReaderStub();
         ConsoleWriterSpy consoleWriterSpy = new ConsoleWriterSpy();
@@ -41,6 +42,7 @@ public class WordCounterIntegrationTests {
             stopWords = param.getStopWords();
             wordCount = param.getCorrectWordCount();
             uniqueWordCount = param.getUniqueWordCount();
+            averageWordLength = param.getAverageWordLength();
 
             readerStub.setup(text);
             stopWordsReaderStub.setup(stopWords);
@@ -48,7 +50,12 @@ public class WordCounterIntegrationTests {
             WordCounterController sut = new WordCounterController(readerStub, stopWordsReaderStub, answerWriter);
             sut.countWords();
 
-            consoleWriterSpy.shouldWriteText(String.format("Number of words: %d, unique: %d", wordCount, uniqueWordCount));
+            consoleWriterSpy.shouldWriteText(String.format(
+                    "Number of words: %d, unique: %d; average word length: %.2f characters",
+                    wordCount,
+                    uniqueWordCount,
+                    averageWordLength
+            ));
         }
     }
 }

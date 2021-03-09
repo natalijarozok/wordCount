@@ -28,6 +28,12 @@ public class TestInput {
         return _uniqueWordCount;
     }
 
+    private float _averageWordLength;
+
+    public float getAverageWordLength() {
+        return _averageWordLength;
+    }
+
     public TestInput(
             List<String> inputText,
             List<String> stopWords,
@@ -38,6 +44,21 @@ public class TestInput {
         _stopWords = stopWords;
         _correctWordCount = correctWordCount;
         _uniqueWordCount = uniqueWordCount;
+        _averageWordLength = 0f;
+    }
+
+    public TestInput(
+            List<String> inputText,
+            List<String> stopWords,
+            int correctWordCount,
+            int uniqueWordCount,
+            float averageWordLength
+    ) {
+        _inputText = inputText;
+        _stopWords = stopWords;
+        _correctWordCount = correctWordCount;
+        _uniqueWordCount = uniqueWordCount;
+        _averageWordLength = averageWordLength;
     }
 
     public void putDelimiterIntoText(String delimiter) {
@@ -49,6 +70,12 @@ public class TestInput {
     }
 
     public TestInput clone() {
-        return new TestInput(this._inputText, this._stopWords, this._correctWordCount, this._uniqueWordCount);
+        return new TestInput(
+                this._inputText,
+                this._stopWords,
+                this._correctWordCount,
+                this._uniqueWordCount,
+                this._averageWordLength
+        );
     }
 }

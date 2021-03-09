@@ -16,9 +16,10 @@ public class AnswerWriterImpl implements AnswerWriter {
     public void write(WordsStatistic wordStatistics) {
 
         _writer.write(String.format(
-                "Number of words: %d, unique: %d",
+                "Number of words: %d, unique: %d; average word length: %.2f characters",
                 wordStatistics.getWordCount(),
-                wordStatistics.getUniqueWordCount()
+                wordStatistics.getUniqueWordCount(),
+                wordStatistics.getAverageWordLength()
         ));
     }
 }

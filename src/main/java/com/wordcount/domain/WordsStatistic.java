@@ -13,8 +13,15 @@ public class WordsStatistic {
         return _uniqueWordCount;
     }
 
-    public WordsStatistic(int wordCount, int uniqueWordCount) {
+    private float _averageWordLength;
+
+    public float getAverageWordLength() {
+        return _averageWordLength;
+    }
+
+    public WordsStatistic(int wordCount, int uniqueWordCount, float averageWordLength) {
         _wordCount = wordCount;
         _uniqueWordCount = uniqueWordCount;
+        _averageWordLength = averageWordLength;
     }
 }

@@ -1,5 +1,6 @@
 package com.wordcount.domain;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -29,13 +30,24 @@ public class WordCounter {
 
         int wordCount = countWords(words);
         int uniqueWordCount = countUniqueWords(words);
-        return new WordsStatistic(wordCount, uniqueWordCount);
+        float averageWordLength = countAverageWordLength(words);
+        return new WordsStatistic(wordCount, uniqueWordCount, averageWordLength);
     }
 
     private List<String> getWords(List<String> tokens) {
         return tokens.stream()
                 .filter(token -> (isStringAWord(token) && isWordAllowed(token)))
                 .collect(Collectors.toList());
+    }
+
+    private float countAverageWordLength(List<String> words) {
+        long totalWordsLength = words.stream().mapToLong(word -> word.length()).sum();
+        float averageWordLength = (float) totalWordsLength / ((words.size() > 0) ? words.size() : 1f);
+        return round(averageWordLength, 2);
+    }
+
+    public static float round(float floatValue, int decimalPlace) {
+        return BigDecimal.valueOf(floatValue).setScale(decimalPlace, BigDecimal.ROUND_HALF_UP).floatValue();
     }
 
     private int countUniqueWords(List<String> words) {

@@ -18,6 +18,7 @@ public class WordCounterUnitTests {
         List<String> stopWords;
         int wordCount;
         int uniqueWordCount;
+        float averageWordLength;
         List<TestInput> params = TestInputValuesSource.getTestInputValuesWithDelimiters();
 
         for (TestInput param : params) {
@@ -25,7 +26,8 @@ public class WordCounterUnitTests {
             stopWords = param.getStopWords();
             wordCount = param.getCorrectWordCount();
             uniqueWordCount = param.getUniqueWordCount();
-            checkThatWordsCountIsCorrect(text, stopWords, wordCount, uniqueWordCount);
+            averageWordLength = param.getAverageWordLength();
+            checkThatWordsCountIsCorrect(text, stopWords, wordCount, uniqueWordCount, averageWordLength);
         }
     }
 
@@ -34,12 +36,14 @@ public class WordCounterUnitTests {
             List<String> text,
             List<String> stopWords,
             int wordCountExpected,
-            int uniqueWordCountExpected
+            int uniqueWordCountExpected,
+            float averageWordLength
     ) {
         WordCounter sut = new WordCounter(text, stopWords);
         WordsStatistic wordStatistics = sut.count();
         assertEquals(wordCountExpected, wordStatistics.getWordCount());
         assertEquals(uniqueWordCountExpected, wordStatistics.getUniqueWordCount());
+        assertEquals(averageWordLength, wordStatistics.getAverageWordLength());
     }
 
 }
