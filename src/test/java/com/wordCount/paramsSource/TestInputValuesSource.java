@@ -46,6 +46,10 @@ public class TestInputValuesSource {
             add(new TestInput(Arrays.asList("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall."), STOP_WORDS_EMPTY, 10, 8));
             add(new TestInput(Arrays.asList("Mary "), STOP_WORDS_EMPTY, 1, 1));
             add(new TestInput(Arrays.asList("Mary"), STOP_WORDS_EMPTY, 1, 1));
+            add(new TestInput(Arrays.asList("Mary- "), STOP_WORDS_EMPTY, 1, 1));
+            add(new TestInput(Arrays.asList("Mary-"), STOP_WORDS_EMPTY, 1, 1));
+            add(new TestInput(Arrays.asList("- "), STOP_WORDS_EMPTY, 1, 1));
+            add(new TestInput(Arrays.asList("-"), STOP_WORDS_EMPTY, 1, 1));
             add(new TestInput(Arrays.asList("Mary 1"), STOP_WORDS_EMPTY, 1, 1));
             add(new TestInput(Arrays.asList("Mary1"), STOP_WORDS_EMPTY, 0, 0));
             add(new TestInput(Arrays.asList("Mary @"), STOP_WORDS_EMPTY, 1, 1));
@@ -64,6 +68,10 @@ public class TestInputValuesSource {
             add(new TestInput(Arrays.asList("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall."), STOP_WORDS, 7, 6));
             add(new TestInput(Arrays.asList("Mary "), STOP_WORDS, 1, 1));
             add(new TestInput(Arrays.asList("Mary"), STOP_WORDS, 1, 1));
+            add(new TestInput(Arrays.asList("Mary- "), STOP_WORDS_EMPTY, 1, 1));
+            add(new TestInput(Arrays.asList("Mary-"), STOP_WORDS_EMPTY, 1, 1));
+            add(new TestInput(Arrays.asList("- "), STOP_WORDS_EMPTY, 1, 1));
+            add(new TestInput(Arrays.asList("-"), STOP_WORDS_EMPTY, 1, 1));
             add(new TestInput(Arrays.asList("Mary 1"), STOP_WORDS, 1, 1));
             add(new TestInput(Arrays.asList("Mary1"), STOP_WORDS, 0, 0));
             add(new TestInput(Arrays.asList("Mary @"), STOP_WORDS, 1, 1));
@@ -82,6 +90,10 @@ public class TestInputValuesSource {
             add(new TestInput(Arrays.asList("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall."), null, 10, 8));
             add(new TestInput(Arrays.asList("Mary "), null, 1, 1));
             add(new TestInput(Arrays.asList("Mary"), null, 1, 1));
+            add(new TestInput(Arrays.asList("Mary- "), STOP_WORDS_EMPTY, 1, 1));
+            add(new TestInput(Arrays.asList("Mary-"), STOP_WORDS_EMPTY, 1, 1));
+            add(new TestInput(Arrays.asList("- "), STOP_WORDS_EMPTY, 1, 1));
+            add(new TestInput(Arrays.asList("-"), STOP_WORDS_EMPTY, 1, 1));
             add(new TestInput(Arrays.asList("Mary 1"), null, 1, 1));
             add(new TestInput(Arrays.asList("Mary1"), null, 0, 0));
             add(new TestInput(Arrays.asList("Mary @"), null, 1, 1));
