@@ -47,7 +47,7 @@ public class WordCounter {
     }
 
     private boolean isStringAWord(String rawString) {
-        return rawString.matches("^[a-zA-Z]*$");
+        return rawString.matches("^[a-zA-Z-]*$");
     }
 
     private boolean isWordAllowed(String word) {

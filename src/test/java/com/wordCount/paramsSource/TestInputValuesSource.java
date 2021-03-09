@@ -9,7 +9,7 @@ public class TestInputValuesSource {
     private static final List<String> STOP_WORDS_EMPTY = Collections.emptyList();
     private static final List<String> STOP_WORDS = Arrays.asList("the", "a", "on", "off");
 
-    private static final List<String> TOKEN_DELIMITERS = Arrays.asList(" ", ".", "-");
+    private static final List<String> TOKEN_DELIMITERS = Arrays.asList(" ", ".");
 
     public static List<TestInput> getTestInputValuesWithDelimiters() {
         List<TestInput> resultInputs = new ArrayList<>();
@@ -43,7 +43,7 @@ public class TestInputValuesSource {
         return new ArrayList<TestInput>() {{
             add(new TestInput(Arrays.asList("Mary had a little lamb"), STOP_WORDS_EMPTY, 5, 5));
             add(new TestInput(Arrays.asList("Mary had", "a little", "lamb"), STOP_WORDS_EMPTY, 5, 5));
-            add(new TestInput(Arrays.asList("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall."), STOP_WORDS_EMPTY, 12, 9));
+            add(new TestInput(Arrays.asList("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall."), STOP_WORDS_EMPTY, 10, 8));
             add(new TestInput(Arrays.asList("Mary "), STOP_WORDS_EMPTY, 1, 1));
             add(new TestInput(Arrays.asList("Mary"), STOP_WORDS_EMPTY, 1, 1));
             add(new TestInput(Arrays.asList("Mary 1"), STOP_WORDS_EMPTY, 1, 1));
@@ -61,7 +61,7 @@ public class TestInputValuesSource {
 
             add(new TestInput(Arrays.asList("Mary had a little lamb"), STOP_WORDS, 4, 4));
             add(new TestInput(Arrays.asList("Mary had", "a little", "lamb"), STOP_WORDS, 4, 4));
-            add(new TestInput(Arrays.asList("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall."), STOP_WORDS, 9, 7));
+            add(new TestInput(Arrays.asList("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall."), STOP_WORDS, 7, 6));
             add(new TestInput(Arrays.asList("Mary "), STOP_WORDS, 1, 1));
             add(new TestInput(Arrays.asList("Mary"), STOP_WORDS, 1, 1));
             add(new TestInput(Arrays.asList("Mary 1"), STOP_WORDS, 1, 1));
@@ -79,7 +79,7 @@ public class TestInputValuesSource {
 
             add(new TestInput(Arrays.asList("Mary had a little lamb"), null, 5, 5));
             add(new TestInput(Arrays.asList("Mary had", "a little", "lamb"), null, 5, 5));
-            add(new TestInput(Arrays.asList("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall."), null, 12, 9));
+            add(new TestInput(Arrays.asList("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall."), null, 10, 8));
             add(new TestInput(Arrays.asList("Mary "), null, 1, 1));
             add(new TestInput(Arrays.asList("Mary"), null, 1, 1));
             add(new TestInput(Arrays.asList("Mary 1"), null, 1, 1));

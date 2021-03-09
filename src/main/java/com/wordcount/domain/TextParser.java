@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 
 public class TextParser {
     private final String DEFAULT_DELIMITER = " ";
-    private final List<String> TOKEN_DELIMITERS = Arrays.asList(DEFAULT_DELIMITER, ".", "-");
+    private final List<String> TOKEN_DELIMITERS = Arrays.asList(DEFAULT_DELIMITER, ".");
 
     private String _text;
 
