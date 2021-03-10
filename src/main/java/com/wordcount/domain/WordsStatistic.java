@@ -1,5 +1,7 @@
 package com.wordcount.domain;
 
+import java.util.List;
+
 public class WordsStatistic {
     private int _wordCount;
 
@@ -19,9 +21,28 @@ public class WordsStatistic {
         return _averageWordLength;
     }
 
-    public WordsStatistic(int wordCount, int uniqueWordCount, float averageWordLength) {
+    private List<String> _wordsIndex;
+
+    public List<String> getWordsIndex() {
+        return _wordsIndex;
+    }
+
+    public WordsStatistic(
+            int wordCount,
+            int uniqueWordCount,
+            float averageWordLength
+    ) {
+        this(wordCount, uniqueWordCount, averageWordLength, null);
+    }
+    public WordsStatistic(
+            int wordCount,
+            int uniqueWordCount,
+            float averageWordLength,
+            List<String> wordsIndex
+    ) {
         _wordCount = wordCount;
         _uniqueWordCount = uniqueWordCount;
         _averageWordLength = averageWordLength;
+        _wordsIndex = wordsIndex;
     }
 }

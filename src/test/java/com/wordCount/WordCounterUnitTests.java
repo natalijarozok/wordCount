@@ -2,7 +2,7 @@ package com.wordCount;
 
 import com.wordCount.paramsSource.TestInput;
 import com.wordCount.paramsSource.TestInputValuesSource;
-import com.wordcount.domain.WordCounter;
+import com.wordcount.domain.WordsStatisticCounter;
 import com.wordcount.domain.WordsStatistic;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +39,7 @@ public class WordCounterUnitTests {
             int uniqueWordCountExpected,
             float averageWordLength
     ) {
-        WordCounter sut = new WordCounter(text, stopWords);
+        WordsStatisticCounter sut = new WordsStatisticCounter(text, stopWords);
         WordsStatistic wordStatistics = sut.count();
         assertEquals(wordCountExpected, wordStatistics.getWordCount());
         assertEquals(uniqueWordCountExpected, wordStatistics.getUniqueWordCount());

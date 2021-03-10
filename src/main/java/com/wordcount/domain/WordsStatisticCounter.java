@@ -6,12 +6,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class WordCounter {
+public class WordsStatisticCounter {
 
     private TextParser _textParser;
     private List<String> _stopWords;
 
-    public WordCounter(List<String> text, List<String> stopWords) {
+    public WordsStatisticCounter(List<String> text, List<String> stopWords) {
         _textParser = new TextParser(text);
         _stopWords = stopWords != null ? stopWords : Collections.emptyList();
     }

@@ -3,7 +3,7 @@ package com.wordCount;
 import com.wordCount.mocks.*;
 import com.wordCount.paramsSource.TestInput;
 import com.wordCount.paramsSource.TestInputValuesSource;
-import com.wordcount.controllers.WordCounterController;
+import com.wordcount.controllers.WordsStatisticController;
 import com.wordcount.writers.AnswerWriter;
 import com.wordcount.writers.impl.AnswerWriterImpl;
 import org.junit.jupiter.api.Test;
@@ -47,8 +47,8 @@ public class WordCounterIntegrationTests {
             readerStub.setup(text);
             stopWordsReaderStub.setup(stopWords);
 
-            WordCounterController sut = new WordCounterController(readerStub, stopWordsReaderStub, answerWriter);
-            sut.countWords();
+            WordsStatisticController sut = new WordsStatisticController(readerStub, stopWordsReaderStub, answerWriter);
+            sut.countWordsStatistic();
 
             consoleWriterSpy.shouldWriteText(String.format(
                     "Number of words: %d, unique: %d; average word length: %.2f characters",

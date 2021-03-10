@@ -1,19 +1,19 @@
 package com.wordcount.controllers;
 
-import com.wordcount.domain.WordCounter;
 import com.wordcount.domain.WordsStatistic;
+import com.wordcount.domain.WordsStatisticCounter;
 import com.wordcount.readers.InputReader;
 import com.wordcount.writers.AnswerWriter;
 
 import java.util.List;
 
-public class WordCounterController {
+public class WordsStatisticController {
 
     private InputReader _reader;
     private InputReader _stopWordsReader;
     private AnswerWriter _writer;
 
-    public WordCounterController(
+    public WordsStatisticController(
             InputReader reader,
             InputReader stopWordsReader,
             AnswerWriter writer
@@ -23,11 +23,11 @@ public class WordCounterController {
         _writer = writer;
     }
 
-    public void countWords() {
+    public void countWordsStatistic() {
         List<String> inputText = readText();
         List<String> stopWords = readStopWords();
-        WordsStatistic wordStatistics = countStatistics(inputText, stopWords);
-        writeWordCount(wordStatistics);
+        WordsStatistic wordsStatistic = countStatistic(inputText, stopWords);
+        writeWordCount(wordsStatistic);
     }
 
     private List<String> readText() {
@@ -38,12 +38,12 @@ public class WordCounterController {
         return _stopWordsReader.read();
     }
 
-    private WordsStatistic countStatistics(List<String> text, List<String> stopWords) {
-        WordCounter wordCounter = new WordCounter(text, stopWords);
-        return wordCounter.count();
+    private WordsStatistic countStatistic(List<String> text, List<String> stopWords) {
+        WordsStatisticCounter wordsStatisticCounter = new WordsStatisticCounter(text, stopWords);
+        return wordsStatisticCounter.count();
     }
 
-    private void writeWordCount(WordsStatistic wordStatistics) {
-        _writer.write(wordStatistics);
+    private void writeWordCount(WordsStatistic wordsStatistic) {
+        _writer.write(wordsStatistic);
     }
 }

@@ -1,6 +1,6 @@
 package com.wordcount;
 
-import com.wordcount.controllers.WordCounterController;
+import com.wordcount.controllers.WordsStatisticController;
 import com.wordcount.factory.InputReaderFactory;
 import com.wordcount.readers.InputReader;
 import com.wordcount.writers.AnswerWriter;
@@ -18,8 +18,12 @@ public class WordCount {
         ConsoleWriter consoleWriter = new ConsoleWriterImpl();
         AnswerWriter answerWriter = new AnswerWriterImpl(consoleWriter);
 
-        WordCounterController controller = new WordCounterController(textReader, stopWordsReader, answerWriter);
-        controller.countWords();
+        WordsStatisticController controller = new WordsStatisticController(
+                textReader,
+                stopWordsReader,
+                answerWriter
+        );
+        controller.countWordsStatistic();
     }
 
     private static String getInputTextFileName(String[] args) {
