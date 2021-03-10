@@ -1,6 +1,6 @@
-package com.wordCount.mocks;
+package com.wordCount.mock;
 
-import com.wordcount.readers.InputReader;
+import com.wordcount.reader.InputReader;
 
 import java.util.List;
 

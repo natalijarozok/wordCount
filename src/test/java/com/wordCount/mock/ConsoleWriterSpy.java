@@ -1,6 +1,6 @@
-package com.wordCount.mocks;
+package com.wordCount.mock;
 
-import com.wordcount.writers.ConsoleWriter;
+import com.wordcount.writer.ConsoleWriter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

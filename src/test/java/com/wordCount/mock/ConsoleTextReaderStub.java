@@ -1,4 +1,4 @@
-package com.wordCount.mocks;
+package com.wordCount.mock;
 
 import java.util.List;
 

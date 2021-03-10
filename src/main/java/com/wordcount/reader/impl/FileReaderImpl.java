@@ -1,7 +1,7 @@
-package com.wordcount.readers.impl;
+package com.wordcount.reader.impl;
 
 import com.wordcount.WordCount;
-import com.wordcount.readers.InputReader;
+import com.wordcount.reader.InputReader;
 
 import java.io.*;
 import java.net.URL;

@@ -1,8 +1,8 @@
 package com.wordcount.factory;
 
-import com.wordcount.readers.InputReader;
-import com.wordcount.readers.impl.ConsoleReaderImpl;
-import com.wordcount.readers.impl.FileReaderImpl;
+import com.wordcount.reader.InputReader;
+import com.wordcount.reader.impl.ConsoleReaderImpl;
+import com.wordcount.reader.impl.FileReaderImpl;
 
 public class InputReaderFactory {
 

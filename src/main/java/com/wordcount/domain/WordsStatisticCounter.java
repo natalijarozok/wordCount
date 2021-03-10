@@ -1,5 +1,8 @@
 package com.wordcount.domain;
 
+import com.wordcount.domain.dto.WordsStatistic;
+import com.wordcount.domain.dto.WordsStatisticOptions;
+
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashSet;
@@ -8,12 +11,18 @@ import java.util.stream.Collectors;
 
 public class WordsStatisticCounter {
 
-    private TextParser _textParser;
+    private List<String> _text;
     private List<String> _stopWords;
+    private WordsStatisticOptions _wordsStatisticOptions;
 
-    public WordsStatisticCounter(List<String> text, List<String> stopWords) {
-        _textParser = new TextParser(text);
+    public WordsStatisticCounter(
+            List<String> text,
+            List<String> stopWords,
+            WordsStatisticOptions wordsStatisticOptions
+    ) {
+        _text = text;
         _stopWords = stopWords != null ? stopWords : Collections.emptyList();
+        _wordsStatisticOptions = wordsStatisticOptions;
     }
 
     public WordsStatistic count() {
@@ -22,7 +31,7 @@ public class WordsStatisticCounter {
     }
 
     private List<String> getTokens() {
-        return _textParser.parse();
+        return new TextParser(_text).parse();
     }
 
     private WordsStatistic getStatistics(List<String> tokens) {
@@ -31,7 +40,8 @@ public class WordsStatisticCounter {
         int wordCount = countWords(words);
         int uniqueWordCount = countUniqueWords(words);
         float averageWordLength = countAverageWordLength(words);
-        return new WordsStatistic(wordCount, uniqueWordCount, averageWordLength);
+        List<String> wordsIndex = _wordsStatisticOptions.getIncludeWordIndex() ? words : null;
+        return new WordsStatistic(wordCount, uniqueWordCount, averageWordLength, wordsIndex);
     }
 
     private List<String> getWords(List<String> tokens) {

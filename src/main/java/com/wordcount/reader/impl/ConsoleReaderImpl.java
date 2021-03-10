@@ -1,6 +1,6 @@
-package com.wordcount.readers.impl;
+package com.wordcount.reader.impl;
 
-import com.wordcount.readers.InputReader;
+import com.wordcount.reader.InputReader;
 
 import java.util.Arrays;
 import java.util.List;

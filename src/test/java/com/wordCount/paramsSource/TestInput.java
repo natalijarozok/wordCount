@@ -1,6 +1,7 @@
 package com.wordCount.paramsSource;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TestInput {
@@ -34,17 +35,24 @@ public class TestInput {
         return _averageWordLength;
     }
 
+    private List<String> _wordIndex;
+
+    public List<String> getWordIndex() {
+        return _wordIndex;
+    }
+
     public TestInput(
             List<String> inputText,
             List<String> stopWords,
-            int correctWordCount,
+            int wordCount,
             int uniqueWordCount
     ) {
         _inputText = inputText;
         _stopWords = stopWords;
-        _correctWordCount = correctWordCount;
+        _correctWordCount = wordCount;
         _uniqueWordCount = uniqueWordCount;
         _averageWordLength = 0f;
+        _wordIndex = Collections.emptyList();
     }
 
     public TestInput(
@@ -52,13 +60,15 @@ public class TestInput {
             List<String> stopWords,
             int correctWordCount,
             int uniqueWordCount,
-            float averageWordLength
+            float averageWordLength,
+            List<String> wordIndex
     ) {
         _inputText = inputText;
         _stopWords = stopWords;
         _correctWordCount = correctWordCount;
         _uniqueWordCount = uniqueWordCount;
         _averageWordLength = averageWordLength;
+        _wordIndex = wordIndex;
     }
 
     public void putDelimiterIntoText(String delimiter) {
@@ -75,7 +85,8 @@ public class TestInput {
                 this._stopWords,
                 this._correctWordCount,
                 this._uniqueWordCount,
-                this._averageWordLength
+                this._averageWordLength,
+                this._wordIndex
         );
     }
 }

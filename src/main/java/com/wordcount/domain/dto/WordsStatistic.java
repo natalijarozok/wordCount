@@ -1,4 +1,4 @@
-package com.wordcount.domain;
+package com.wordcount.domain.dto;
 
 import java.util.List;
 

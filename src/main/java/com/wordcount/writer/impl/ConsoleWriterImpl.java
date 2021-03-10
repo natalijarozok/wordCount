@@ -1,6 +1,6 @@
-package com.wordcount.writers.impl;
+package com.wordcount.writer.impl;
 
-import com.wordcount.writers.ConsoleWriter;
+import com.wordcount.writer.ConsoleWriter;
 
 public class ConsoleWriterImpl implements ConsoleWriter {
 

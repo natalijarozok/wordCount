@@ -1,8 +1,8 @@
-package com.wordcount.writers.impl;
+package com.wordcount.writer.impl;
 
-import com.wordcount.domain.WordsStatistic;
-import com.wordcount.writers.AnswerWriter;
-import com.wordcount.writers.ConsoleWriter;
+import com.wordcount.domain.dto.WordsStatistic;
+import com.wordcount.writer.AnswerWriter;
+import com.wordcount.writer.ConsoleWriter;
 
 public class AnswerWriterImpl implements AnswerWriter {
 

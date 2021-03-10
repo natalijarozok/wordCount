@@ -1,11 +1,12 @@
 package com.wordCount;
 
-import com.wordCount.mocks.*;
+import com.wordCount.mock.*;
 import com.wordCount.paramsSource.TestInput;
 import com.wordCount.paramsSource.TestInputValuesSource;
-import com.wordcount.controllers.WordsStatisticController;
-import com.wordcount.writers.AnswerWriter;
-import com.wordcount.writers.impl.AnswerWriterImpl;
+import com.wordcount.controller.WordsStatisticController;
+import com.wordcount.domain.dto.WordsStatisticOptions;
+import com.wordcount.writer.AnswerWriter;
+import com.wordcount.writer.impl.AnswerWriterImpl;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -13,18 +14,18 @@ import java.util.List;
 public class WordCounterIntegrationTests {
 
     @Test
-    public void word_counting_in_text_from_console() {
+    public void words_statistic_in_text_from_console() {
         ConsoleTextReaderStub readerStub = new ConsoleTextReaderStub();
-        word_counting(readerStub);
+        checkThatWordsStatisticIsCorrect(readerStub);
     }
 
     @Test
-    public void word_counting_in_text_from_file() {
+    public void words_statistic_in_text_from_file() {
         FileTextReaderReaderStub readerStub = new FileTextReaderReaderStub();
-        word_counting(readerStub);
+        checkThatWordsStatisticIsCorrect(readerStub);
     }
 
-    private void word_counting(TextReaderStub readerStub) {
+    private void checkThatWordsStatisticIsCorrect(TextReaderStub readerStub) {
         List<String> text;
         List<String> stopWords;
         int wordCount;
@@ -35,7 +36,7 @@ public class WordCounterIntegrationTests {
         ConsoleWriterSpy consoleWriterSpy = new ConsoleWriterSpy();
         AnswerWriter answerWriter = new AnswerWriterImpl(consoleWriterSpy);
 
-        List<TestInput> params = TestInputValuesSource.getTestInputValuesWithDelimiters();
+        List<TestInput> params = TestInputValuesSource.getTestInputValues();
 
         for (TestInput param : params) {
             text = param.getInputText();
@@ -47,7 +48,12 @@ public class WordCounterIntegrationTests {
             readerStub.setup(text);
             stopWordsReaderStub.setup(stopWords);
 
-            WordsStatisticController sut = new WordsStatisticController(readerStub, stopWordsReaderStub, answerWriter);
+            WordsStatisticController sut = new WordsStatisticController(
+                    readerStub,
+                    stopWordsReaderStub,
+                    answerWriter,
+                    new WordsStatisticOptions()
+            );
             sut.countWordsStatistic();
 
             consoleWriterSpy.shouldWriteText(String.format(

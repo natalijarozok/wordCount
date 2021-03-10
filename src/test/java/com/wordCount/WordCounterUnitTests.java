@@ -3,9 +3,11 @@ package com.wordCount;
 import com.wordCount.paramsSource.TestInput;
 import com.wordCount.paramsSource.TestInputValuesSource;
 import com.wordcount.domain.WordsStatisticCounter;
-import com.wordcount.domain.WordsStatistic;
+import com.wordcount.domain.dto.WordsStatistic;
+import com.wordcount.domain.dto.WordsStatisticOptions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,37 +15,51 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class WordCounterUnitTests {
 
     @Test
-    public void word_counting() {
+    public void words_statistic_without_index_option() {
         List<String> text;
         List<String> stopWords;
-        int wordCount;
-        int uniqueWordCount;
-        float averageWordLength;
-        List<TestInput> params = TestInputValuesSource.getTestInputValuesWithDelimiters();
+        int correctWordCount;
+        int correctUniqueWordCount;
+        float correctAverageWordLength;
+        List<String> correctWordsIndex;
+
+        List<TestInput> params = TestInputValuesSource.getTestInputValues();
 
         for (TestInput param : params) {
             text = param.getInputText();
             stopWords = param.getStopWords();
-            wordCount = param.getCorrectWordCount();
-            uniqueWordCount = param.getUniqueWordCount();
-            averageWordLength = param.getAverageWordLength();
-            checkThatWordsCountIsCorrect(text, stopWords, wordCount, uniqueWordCount, averageWordLength);
+            correctWordCount = param.getCorrectWordCount();
+            correctUniqueWordCount = param.getUniqueWordCount();
+            correctAverageWordLength = param.getAverageWordLength();
+            correctWordsIndex = param.getWordIndex();
+            checkThatWordsStatisticIsCorrect(
+                    text,
+                    stopWords,
+                    false,
+                    correctWordCount,
+                    correctUniqueWordCount,
+                    correctAverageWordLength,
+                    Collections.emptyList()
+            );
         }
     }
 
 
-    private void checkThatWordsCountIsCorrect(
+    private void checkThatWordsStatisticIsCorrect(
             List<String> text,
             List<String> stopWords,
-            int wordCountExpected,
-            int uniqueWordCountExpected,
-            float averageWordLength
+            boolean includeWordIndex,
+            int correctWordCount,
+            int correctUniqueWordCount,
+            float correctAverageWordLength,
+            List<String> correctWordsIndex
     ) {
-        WordsStatisticCounter sut = new WordsStatisticCounter(text, stopWords);
+        WordsStatisticCounter sut = new WordsStatisticCounter(text, stopWords, new WordsStatisticOptions(includeWordIndex));
         WordsStatistic wordStatistics = sut.count();
-        assertEquals(wordCountExpected, wordStatistics.getWordCount());
-        assertEquals(uniqueWordCountExpected, wordStatistics.getUniqueWordCount());
-        assertEquals(averageWordLength, wordStatistics.getAverageWordLength());
+        assertEquals(correctWordCount, wordStatistics.getWordCount());
+        assertEquals(correctUniqueWordCount, wordStatistics.getUniqueWordCount());
+        assertEquals(correctAverageWordLength, wordStatistics.getAverageWordLength());
+        assertEquals(correctWordsIndex, wordStatistics.getWordsIndex());
     }
 
 }
