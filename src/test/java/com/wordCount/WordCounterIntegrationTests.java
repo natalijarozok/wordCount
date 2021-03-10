@@ -1,8 +1,8 @@
 package com.wordCount;
 
+import com.wordCount.data.TestDataStructure;
+import com.wordCount.data.TestInput;
 import com.wordCount.mock.*;
-import com.wordCount.paramsSource.TestInput;
-import com.wordCount.paramsSource.TestInputValuesSource;
 import com.wordcount.controller.WordsStatisticController;
 import com.wordcount.domain.dto.WordsStatisticOptions;
 import com.wordcount.writer.AnswerWriter;
@@ -12,6 +12,11 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 public class WordCounterIntegrationTests {
+
+    private StopWordsReaderStub stopWordsReaderStub;
+    private ConsoleWriterSpy consoleWriterSpy;
+    private AnswerWriter answerWriter;
+
 
     @Test
     public void words_statistic_in_text_from_console() {
@@ -26,42 +31,33 @@ public class WordCounterIntegrationTests {
     }
 
     private void checkThatWordsStatisticIsCorrect(TextReaderStub readerStub) {
-        List<String> text;
-        List<String> stopWords;
-        int wordCount;
-        int uniqueWordCount;
-        float averageWordLength;
+        stopWordsReaderStub = new StopWordsReaderStub();
+        consoleWriterSpy = new ConsoleWriterSpy();
+        answerWriter = new AnswerWriterImpl(consoleWriterSpy);
+        List<TestDataStructure> testInput = new TestInput().get();
 
-        StopWordsReaderStub stopWordsReaderStub = new StopWordsReaderStub();
-        ConsoleWriterSpy consoleWriterSpy = new ConsoleWriterSpy();
-        AnswerWriter answerWriter = new AnswerWriterImpl(consoleWriterSpy);
-
-        List<TestInput> params = TestInputValuesSource.getTestInputValues();
-
-        for (TestInput param : params) {
-            text = param.getInputText();
-            stopWords = param.getStopWords();
-            wordCount = param.getCorrectWordCount();
-            uniqueWordCount = param.getUniqueWordCount();
-            averageWordLength = param.getAverageWordLength();
-
-            readerStub.setup(text);
-            stopWordsReaderStub.setup(stopWords);
-
-            WordsStatisticController sut = new WordsStatisticController(
-                    readerStub,
-                    stopWordsReaderStub,
-                    answerWriter,
-                    new WordsStatisticOptions()
-            );
-            sut.countWordsStatistic();
-
-            consoleWriterSpy.shouldWriteText(String.format(
-                    "Number of words: %d, unique: %d; average word length: %.2f characters",
-                    wordCount,
-                    uniqueWordCount,
-                    averageWordLength
-            ));
+        for (TestDataStructure testData : testInput) {
+            checkThatWordsStatisticIsCorrect(testData, readerStub);
         }
+    }
+
+    private void checkThatWordsStatisticIsCorrect(TestDataStructure testData, TextReaderStub readerStub) {
+        readerStub.setup(testData.getInputText());
+        stopWordsReaderStub.setup(testData.getStopWords());
+
+        WordsStatisticController sut = new WordsStatisticController(
+                readerStub,
+                stopWordsReaderStub,
+                answerWriter,
+                new WordsStatisticOptions(testData.getIncludeWordIndex())
+        );
+        sut.countWordsStatistic();
+
+        consoleWriterSpy.shouldWriteText(String.format(
+                "Number of words: %d, unique: %d; average word length: %.2f characters",
+                testData.getCorrectWordCount(),
+                testData.getCorrectUniqueWordCount(),
+                testData.getCorrectAverageWordLength()
+        ));
     }
 }
