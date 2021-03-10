@@ -10,6 +10,7 @@ import com.wordcount.writer.impl.AnswerWriterImpl;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WordCounterIntegrationTests {
 
@@ -52,12 +53,24 @@ public class WordCounterIntegrationTests {
                 new WordsStatisticOptions(testData.getIncludeWordIndex())
         );
         sut.countWordsStatistic();
+        consoleWriterSpy.shouldWriteText(getExpectedAnswer(testData));
+    }
 
-        consoleWriterSpy.shouldWriteText(String.format(
-                "Number of words: %d, unique: %d; average word length: %.2f characters",
-                testData.getCorrectWordCount(),
-                testData.getCorrectUniqueWordCount(),
-                testData.getCorrectAverageWordLength()
-        ));
+    private String getExpectedAnswer(TestDataStructure testData) {
+        String expectedAnswer =
+                String.format(
+                        "Number of words: %d, unique: %d; average word length: %.2f characters",
+                        testData.getExpectedWordCount(),
+                        testData.getExpectedUniqueWordCount(),
+                        testData.getExpectedAverageWordLength()
+                );
+
+        if (testData.getIncludeWordIndex() == true) {
+            expectedAnswer += "\nIndex:\n";
+            for (String word : testData.getExpectedWordIndex()) {
+                expectedAnswer += String.format("%s\n", word);
+            }
+        }
+        return expectedAnswer;
     }
 }

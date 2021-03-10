@@ -34,6 +34,7 @@ public class WordsStatistic {
     ) {
         this(wordCount, uniqueWordCount, averageWordLength, null);
     }
+
     public WordsStatistic(
             int wordCount,
             int uniqueWordCount,
@@ -44,5 +45,16 @@ public class WordsStatistic {
         _uniqueWordCount = uniqueWordCount;
         _averageWordLength = averageWordLength;
         _wordsIndex = wordsIndex;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WordsStatistic that = (WordsStatistic) o;
+        return _wordCount == that._wordCount &&
+                _uniqueWordCount == that._uniqueWordCount &&
+                _averageWordLength == that._averageWordLength &&
+                ((_wordsIndex == null && that._wordsIndex == null) || _wordsIndex.equals(that._wordsIndex));
     }
 }

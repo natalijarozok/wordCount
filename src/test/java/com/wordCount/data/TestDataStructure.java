@@ -29,25 +29,29 @@ public class TestDataStructure {
 
     private int _expectedWordCount;
 
-    public int getCorrectWordCount() {
+    public int getExpectedWordCount() {
         return _expectedWordCount;
     }
 
     private int _expectedUniqueWordCount;
 
-    public int getCorrectUniqueWordCount() {
+    public int getExpectedUniqueWordCount() {
         return _expectedUniqueWordCount;
     }
 
     private float _expectedAverageWordLength;
 
-    public float getCorrectAverageWordLength() {
+    public float getExpectedAverageWordLength() {
         return _expectedAverageWordLength;
     }
 
     private List<String> _expectedWordIndex;
 
-    public List<String> getCorrectWordIndex() {
+    public void setExpectedWordIndex(List<String> newExpectedWordIndex) {
+        this._expectedWordIndex = newExpectedWordIndex;
+    }
+
+    public List<String> getExpectedWordIndex() {
         return _expectedWordIndex;
     }
 
@@ -68,16 +72,16 @@ public class TestDataStructure {
     public TestDataStructure(
             List<String> inputText,
             List<String> stopWords,
-            int correctWordCount,
-            int uniqueWordCount,
-            float averageWordLength,
+            int expectedWordCount,
+            int expectedUniqueWordCount,
+            float expectedAverageWordLength,
             List<String> wordIndex
     ) {
         _inputText = inputText;
         _stopWords = stopWords;
-        _expectedWordCount = correctWordCount;
-        _expectedUniqueWordCount = uniqueWordCount;
-        _expectedAverageWordLength = averageWordLength;
+        _expectedWordCount = expectedWordCount;
+        _expectedUniqueWordCount = expectedUniqueWordCount;
+        _expectedAverageWordLength = expectedAverageWordLength;
         _expectedWordIndex = wordIndex;
     }
 

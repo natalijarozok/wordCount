@@ -40,7 +40,8 @@ public class WordsStatisticCounter {
         int wordCount = countWords(words);
         int uniqueWordCount = countUniqueWords(words);
         float averageWordLength = countAverageWordLength(words);
-        List<String> wordsIndex = _wordsStatisticOptions.getIncludeWordIndex() ? words : null;
+        List<String> wordsIndex = _wordsStatisticOptions.getIncludeWordIndex() ? sortWords(words) : null;
+
         return new WordsStatistic(wordCount, uniqueWordCount, averageWordLength, wordsIndex);
     }
 
@@ -50,22 +51,18 @@ public class WordsStatisticCounter {
                 .collect(Collectors.toList());
     }
 
-    private float countAverageWordLength(List<String> words) {
-        long totalWordsLength = words.stream().mapToLong(word -> word.length()).sum();
-        float averageWordLength = (float) totalWordsLength / ((words.size() > 0) ? words.size() : 1f);
-        return round(averageWordLength, 2);
-    }
-
-    public static float round(float floatValue, int decimalPlace) {
-        return BigDecimal.valueOf(floatValue).setScale(decimalPlace, BigDecimal.ROUND_HALF_UP).floatValue();
+    private int countWords(List<String> words) {
+        return words.size();
     }
 
     private int countUniqueWords(List<String> words) {
         return new HashSet<>(words).size();
     }
 
-    private int countWords(List<String> words) {
-        return words.size();
+    private float countAverageWordLength(List<String> words) {
+        long totalWordsLength = words.stream().mapToLong(word -> word.length()).sum();
+        float averageWordLength = (float) totalWordsLength / ((words.size() > 0) ? words.size() : 1f);
+        return round(averageWordLength, 2);
     }
 
     private boolean isStringAWord(String rawString) {
@@ -74,5 +71,14 @@ public class WordsStatisticCounter {
 
     private boolean isWordAllowed(String word) {
         return !_stopWords.contains(word);
+    }
+
+    public static float round(float floatValue, int decimalPlace) {
+        return BigDecimal.valueOf(floatValue).setScale(decimalPlace, BigDecimal.ROUND_HALF_UP).floatValue();
+    }
+
+    private List<String> sortWords(List<String> words) {
+        Collections.sort(words, new SorterCaseInsensitive());
+        return words;
     }
 }

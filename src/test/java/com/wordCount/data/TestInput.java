@@ -11,9 +11,17 @@ public class TestInput {
     public List<TestDataStructure> get() {
         List<TestDataStructure> testDataCollection = TestDataSource.getData();
         testDataCollection = getTestDataCollectionWithDelimitersCombinations(testDataCollection);
-        testDataCollection = getTestDataCollectionWithIncludeWordIndex(testDataCollection, true);
-        testDataCollection = getTestDataCollectionWithIncludeWordIndex(testDataCollection, false);
+        testDataCollection = getTestDataCollectionWithIncludeWordIndexCombinations(testDataCollection);
         return testDataCollection;
+    }
+
+    private static List<TestDataStructure> getTestDataCollectionWithIncludeWordIndexCombinations(
+            List<TestDataStructure> testDataCollection
+    ) {
+        List<TestDataStructure> result = new ArrayList<>();
+        result.addAll(getTestDataCollectionWithIncludeWordIndex(testDataCollection, true));
+        result.addAll(getTestDataCollectionWithIncludeWordIndex(testDataCollection, false));
+        return result;
     }
 
     private static List<TestDataStructure> getTestDataCollectionWithDelimitersCombinations(
@@ -58,6 +66,10 @@ public class TestInput {
         for (TestDataStructure testData : testDataCollection) {
             testDataCloned = testData.clone();
             testDataCloned.setIncludeWordIndex(includeWordIndex);
+
+            if (!includeWordIndex)
+                testDataCloned.setExpectedWordIndex(null);
+
             result.add(testDataCloned);
         }
         return result;

@@ -14,11 +14,11 @@ public class WordCount {
     private static final String STOP_WORDS_FILE_NAME = "stopwords.txt";
 
     public static void main(String[] args) {
-        InputReader textReader = new InputReaderFactory(RunTimeParamsParser.getInputTextFileName(args)).create();
+        InputReader textReader = new InputReaderFactory(ParamsParser.getInputTextFileName(args)).create();
         InputReader stopWordsReader = new InputReaderFactory(STOP_WORDS_FILE_NAME).create();
         ConsoleWriter consoleWriter = new ConsoleWriterImpl();
         AnswerWriter answerWriter = new AnswerWriterImpl(consoleWriter);
-        WordsStatisticOptions runTimeOptions = RunTimeParamsParser.getWordsStatisticOptions(args);
+        WordsStatisticOptions runTimeOptions = ParamsParser.getWordsStatisticOptions(args);
 
         WordsStatisticController controller = new WordsStatisticController(
                 textReader,

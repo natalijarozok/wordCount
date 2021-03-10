@@ -11,9 +11,9 @@ public class TestDataSource {
 
     public static List<TestDataStructure> getData() {
         return new ArrayList<TestDataStructure>() {{
-            add(data(Arrays.asList("Mary had a little lamb"), STOP_WORDS_EMPTY, 5, 5, 3.6f, Arrays.asList("Mary", "had", "a", "little", "lamb")));
-            add(data(Arrays.asList("Mary had", "a little", "lamb"), STOP_WORDS_EMPTY, 5, 5, 3.6f, Arrays.asList("Mary", "had", "a", "little", "lamb")));
-            add(data(Arrays.asList("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall."), STOP_WORDS_EMPTY, 10, 8, 4.9f, Arrays.asList("Humpty-Dumpty", "sat", "on", "a", "wall", "Humpty-Dumpty", "had", "a", "great", "fall")));
+            add(data(Arrays.asList("Mary had a little lamb"), STOP_WORDS_EMPTY, 5, 5, 3.6f, Arrays.asList("a", "had", "lamb", "little", "Mary")));
+            add(data(Arrays.asList("Mary had", "a little", "lamb"), STOP_WORDS_EMPTY, 5, 5, 3.6f, Arrays.asList("a", "had", "lamb", "little", "Mary")));
+            add(data(Arrays.asList("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall."), STOP_WORDS_EMPTY, 10, 8, 4.9f, Arrays.asList("a", "a", "fall", "great", "had", "Humpty-Dumpty", "Humpty-Dumpty", "on", "sat", "wall")));
             add(data(Arrays.asList("Mary "), STOP_WORDS_EMPTY, 1, 1, 4f, Arrays.asList("Mary")));
             add(data(Arrays.asList("Mary"), STOP_WORDS_EMPTY, 1, 1, 4f, Arrays.asList("Mary")));
             add(data(Arrays.asList("Mary- "), STOP_WORDS_EMPTY, 1, 1, 5f, Arrays.asList("Mary-")));
@@ -33,9 +33,9 @@ public class TestDataSource {
             add(data(Arrays.asList(""), STOP_WORDS_EMPTY, 0, 0));
             add(data(null, STOP_WORDS_EMPTY, 0, 0));
 
-            add(data(Arrays.asList("Mary had a little lamb"), STOP_WORDS, 4, 4, 4.25f, Arrays.asList("Mary", "had", "little", "lamb")));
-            add(data(Arrays.asList("Mary had", "a little", "lamb"), STOP_WORDS, 4, 4, 4.25f, Arrays.asList("Mary", "had", "little", "lamb")));
-            add(data(Arrays.asList("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall."), STOP_WORDS, 7, 6, 6.43f, Arrays.asList("Humpty-Dumpty", "sat", "wall", "Humpty-Dumpty", "had", "great", "fall")));
+            add(data(Arrays.asList("Mary had a little lamb"), STOP_WORDS, 4, 4, 4.25f, Arrays.asList("had", "lamb", "little", "Mary")));
+            add(data(Arrays.asList("Mary had", "a little", "lamb"), STOP_WORDS, 4, 4, 4.25f, Arrays.asList("had", "lamb", "little", "Mary")));
+            add(data(Arrays.asList("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall."), STOP_WORDS, 7, 6, 6.43f, Arrays.asList("fall", "great", "had", "Humpty-Dumpty", "Humpty-Dumpty", "sat", "wall")));
             add(data(Arrays.asList("Mary "), STOP_WORDS, 1, 1, 4f, Arrays.asList("Mary")));
             add(data(Arrays.asList("Mary"), STOP_WORDS, 1, 1, 4f, Arrays.asList("Mary")));
             add(data(Arrays.asList("Mary- "), STOP_WORDS_EMPTY, 1, 1, 5f, Arrays.asList("Mary-")));
@@ -55,9 +55,9 @@ public class TestDataSource {
             add(data(Arrays.asList(""), STOP_WORDS, 0, 0));
             add(data(null, STOP_WORDS, 0, 0));
 
-            add(data(Arrays.asList("Mary had a little lamb"), null, 5, 5, 3.6f, Arrays.asList("Mary", "had", "a", "little", "lamb")));
-            add(data(Arrays.asList("Mary had", "a little", "lamb"), null, 5, 5, 3.6f, Arrays.asList("Mary", "had", "a", "little", "lamb")));
-            add(data(Arrays.asList("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall."), null, 10, 8, 4.9f, Arrays.asList("Humpty-Dumpty", "sat", "on", "a", "wall", "Humpty-Dumpty", "had", "a", "great", "fall")));
+            add(data(Arrays.asList("Mary had a little lamb"), null, 5, 5, 3.6f, Arrays.asList("a", "had", "lamb", "little", "Mary")));
+            add(data(Arrays.asList("Mary had", "a little", "lamb"), null, 5, 5, 3.6f, Arrays.asList("a", "had", "lamb", "little", "Mary")));
+            add(data(Arrays.asList("Humpty-Dumpty sat on a wall. Humpty-Dumpty had a great fall."), null, 10, 8, 4.9f, Arrays.asList("a", "a", "fall", "great", "had", "Humpty-Dumpty", "Humpty-Dumpty", "on", "sat", "wall")));
             add(data(Arrays.asList("Mary "), null, 1, 1, 4f, Arrays.asList("Mary")));
             add(data(Arrays.asList("Mary"), null, 1, 1, 4f, Arrays.asList("Mary")));
             add(data(Arrays.asList("Mary- "), STOP_WORDS_EMPTY, 1, 1, 5f, Arrays.asList("Mary-")));
@@ -75,7 +75,7 @@ public class TestDataSource {
             add(data(Arrays.asList("@"), null, 0, 0));
             add(data(Arrays.asList(" "), null, 0, 0));
             add(data(Arrays.asList(""), null, 0, 0));
-            add(new TestDataStructure(null, null, 0, 0));
+            add(data(null, null, 0, 0));
         }};
     }
 
@@ -89,9 +89,7 @@ public class TestDataSource {
                 inputText,
                 stopWords,
                 correctWordCount,
-                uniqueWordCount,
-                0f,
-                null
+                uniqueWordCount
         );
     }
 

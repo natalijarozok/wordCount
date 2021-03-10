@@ -37,7 +37,7 @@ public class TextParser {
     }
 
     private String replaceAll(String target, String oldValue, String newValue) {
-        if (oldValue == newValue) return target;
+        if (oldValue.equals(newValue)) return target;
 
         String result = target;
         while (result.contains(oldValue)) {

@@ -6,15 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ConsoleWriterSpy implements ConsoleWriter {
 
-    private String _outputText;
+    private String _actualText;
 
 
     @Override
     public void write(String outputText) {
-        _outputText = outputText;
+        _actualText = outputText;
     }
 
-    public void shouldWriteText(String text) {
-        assertEquals(text, _outputText);
+    public void shouldWriteText(String expectedText) {
+        assertEquals(expectedText, _actualText);
     }
 }

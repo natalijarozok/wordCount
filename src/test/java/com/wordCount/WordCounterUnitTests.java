@@ -30,17 +30,13 @@ public class WordCounterUnitTests {
         WordsStatistic actualWordStatistics = sut.count();
 
         WordsStatistic expectedWordsStatistic = new WordsStatistic(
-                testData.getCorrectWordCount(),
-                testData.getCorrectUniqueWordCount(),
-                testData.getCorrectAverageWordLength(),
-                testData.getCorrectWordIndex()
+                testData.getExpectedWordCount(),
+                testData.getExpectedUniqueWordCount(),
+                testData.getExpectedAverageWordLength(),
+                testData.getExpectedWordIndex()
         );
 
         assertEquals(expectedWordsStatistic, actualWordStatistics);
-//        assertEquals(correctWordCount, wordStatistics.getWordCount());
-//        assertEquals(correctUniqueWordCount, wordStatistics.getUniqueWordCount());
-//        assertEquals(correctAverageWordLength, wordStatistics.getAverageWordLength());
-//        assertEquals(correctWordsIndex, wordStatistics.getWordsIndex());
     }
 
 }
