@@ -3,10 +3,6 @@ package com.wordcount.domain.dto;
 public class WordsStatisticOptions {
     private boolean _showWordsIndex;
 
-    public WordsStatisticOptions() {
-        this(false);
-    }
-
     public WordsStatisticOptions(boolean showWordsIndex) {
         _showWordsIndex = showWordsIndex;
     }
@@ -17,5 +13,13 @@ public class WordsStatisticOptions {
 
     public boolean isWordIndexRequired() {
         return _showWordsIndex;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        WordsStatisticOptions that = (WordsStatisticOptions) o;
+        return _showWordsIndex == that._showWordsIndex;
     }
 }

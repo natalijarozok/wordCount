@@ -1,4 +1,7 @@
-package com.wordCount.data;
+package com.wordCount.data.wordsStatistic;
+
+import com.wordCount.data.wordsStatistic.TestDataSource;
+import com.wordCount.data.wordsStatistic.TestDataStructure;
 
 import java.util.ArrayList;
 import java.util.Arrays;

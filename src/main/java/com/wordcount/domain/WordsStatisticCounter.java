@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 
 public class WordsStatisticCounter {
 
-    private List<String> _text;
-    private List<String> _stopWords;
-    private List<String> _dictionaryWords;
-    private WordsStatisticOptions _wordsStatisticOptions;
+    private final List<String> _text;
+    private final List<String> _stopWords;
+    private final List<String> _dictionaryWords;
+    private final WordsStatisticOptions _wordsStatisticOptions;
 
     private List<Word> _words;
 
@@ -66,7 +66,7 @@ public class WordsStatisticCounter {
 
     private int countUniqueWords() {
         return new HashSet<>(
-                _words.stream().map(word -> word.getValue()).collect(Collectors.toList())
+                _words.stream().map(Word::getValue).collect(Collectors.toList())
         ).size();
     }
 
@@ -80,15 +80,14 @@ public class WordsStatisticCounter {
         if (_dictionaryWords == null || _dictionaryWords.isEmpty()) return;
         _words.stream()
                 .filter(word -> !_dictionaryWords.contains(word.getValue()))
-                .forEach(word -> word.makeWordUnknown());
+                .forEach(Word::makeWordUnknown);
     }
 
     private Integer countUnknownWords() {
         return _dictionaryWords == null ? null :
-                _words.stream()
+                (int) _words.stream()
                         .filter(word -> !word.wordIsKnown())
-                        .collect(Collectors.toList())
-                        .size();
+                        .count();
     }
 
     private List<Word> getWordsIndex() {
@@ -108,7 +107,7 @@ public class WordsStatisticCounter {
     }
 
     private List<Word> sortWords(List<Word> words) {
-        Collections.sort(words, new WordSorterCaseInsensitive());
+        words.sort(new WordSorterCaseInsensitive());
         return words;
     }
 }

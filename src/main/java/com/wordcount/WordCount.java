@@ -3,6 +3,7 @@ package com.wordcount;
 import com.wordcount.controller.WordsStatisticController;
 import com.wordcount.domain.dto.WordsStatisticOptions;
 import com.wordcount.factory.InputReaderFactory;
+import com.wordcount.paramsParser.ParamsParser;
 import com.wordcount.reader.InputReader;
 import com.wordcount.writer.AnswerWriter;
 import com.wordcount.writer.ConsoleWriter;

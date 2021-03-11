@@ -10,11 +10,11 @@ import java.util.List;
 
 public class WordsStatisticController {
 
-    private InputReader _reader;
-    private InputReader _stopWordsReader;
-    private InputReader _dictionaryReader;
-    private AnswerWriter _writer;
-    private WordsStatisticOptions _wordsStatisticOptions;
+    private final InputReader _reader;
+    private final InputReader _stopWordsReader;
+    private final InputReader _dictionaryReader;
+    private final AnswerWriter _writer;
+    private final WordsStatisticOptions _wordsStatisticOptions;
 
     public WordsStatisticController(
             InputReader reader,

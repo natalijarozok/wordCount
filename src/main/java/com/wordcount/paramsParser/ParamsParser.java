@@ -1,4 +1,4 @@
-package com.wordcount;
+package com.wordcount.paramsParser;
 
 import com.wordcount.domain.dto.WordsStatisticOptions;
 import com.wordcount.domain.enums.InputOptionType;
@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ParamsParser {
-    private String _args[];
+    private final String[] _args;
     private List<Option> _inputOptions;
 
     private String _textFileName = "";
@@ -18,7 +18,7 @@ public class ParamsParser {
         return _textFileName;
     }
 
-    private WordsStatisticOptions _statisticsOptions = new WordsStatisticOptions(false);
+    private final WordsStatisticOptions _statisticsOptions = new WordsStatisticOptions(false);
 
     public WordsStatisticOptions getStatisticsOptions() {
         return _statisticsOptions;
@@ -62,8 +62,8 @@ public class ParamsParser {
     private void setInputOptions() {
         _inputOptions = Arrays.stream(_args)
                 .filter(arg -> arg.startsWith("-"))
-                .map(arg -> toOption(arg))
-                .filter(option -> option.isValid())
+                .map(this::toOption)
+                .filter(Option::isValid)
                 .collect(Collectors.toList());
     }
 
@@ -75,7 +75,7 @@ public class ParamsParser {
         Optional<Option> option = _inputOptions.stream()
                 .filter(inputOption -> inputOption.getName().equalsIgnoreCase(optionType.format()))
                 .findFirst();
-        return option.isPresent() ? option.get() : null;
+        return option.orElse(null);
     }
 
     private boolean isParameter(String parameter) {
@@ -90,27 +90,3 @@ public class ParamsParser {
     }
 }
 
-class Option {
-    private String _name;
-
-    String getName() {
-        return _name;
-    }
-
-    private String _value;
-
-    String getValue() {
-        return _value;
-    }
-
-    Option(String name, String value) {
-        _name = name;
-        _value = value;
-    }
-
-    boolean isValid() {
-        return Arrays.stream(InputOptionType.values())
-                .filter(option -> option.format().equalsIgnoreCase(this._name))
-                .count() > 0;
-    }
-}

@@ -1,7 +1,7 @@
 package com.wordcount.domain.dto;
 
 public class Word {
-    private String _value;
+    private final String _value;
 
     public String getValue() {
         return _value;

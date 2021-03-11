@@ -9,7 +9,7 @@ public class TextParser {
     private final String DEFAULT_DELIMITER = " ";
     private final List<String> TOKEN_DELIMITERS = Arrays.asList(DEFAULT_DELIMITER, ".");
 
-    private String _text;
+    private final String _text;
 
     TextParser(List<String> text) {
         _text = text != null ? String.join(DEFAULT_DELIMITER, text) : "";

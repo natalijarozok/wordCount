@@ -1,4 +1,4 @@
-package com.wordCount.data;
+package com.wordCount.data.wordsStatistic;
 
 import com.wordcount.domain.dto.Word;
 

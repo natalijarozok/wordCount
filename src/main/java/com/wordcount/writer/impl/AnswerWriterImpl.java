@@ -7,7 +7,7 @@ import com.wordcount.writer.ConsoleWriter;
 
 public class AnswerWriterImpl implements AnswerWriter {
 
-    private ConsoleWriter _writer;
+    private final ConsoleWriter _writer;
     private WordsStatistic _wordStatistics;
 
     public AnswerWriterImpl(ConsoleWriter writer) {

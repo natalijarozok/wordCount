@@ -6,7 +6,7 @@ import com.wordcount.reader.impl.FileReaderImpl;
 
 public class InputReaderFactory {
 
-    private String _fileName;
+    private final String _fileName;
 
     public InputReaderFactory(String fileName) {
         _fileName = fileName;

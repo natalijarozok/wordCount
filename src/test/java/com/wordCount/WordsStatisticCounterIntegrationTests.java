@@ -1,7 +1,7 @@
 package com.wordCount;
 
-import com.wordCount.data.TestDataStructure;
-import com.wordCount.data.TestInput;
+import com.wordCount.data.wordsStatistic.TestDataStructure;
+import com.wordCount.data.wordsStatistic.TestInput;
 import com.wordCount.mock.*;
 import com.wordcount.controller.WordsStatisticController;
 import com.wordcount.domain.dto.Word;
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class WordCounterIntegrationTests {
+public class WordsStatisticCounterIntegrationTests {
 
     private StopWordsReaderStub stopWordsReaderStub = new StopWordsReaderStub();
     private DictionaryReaderStub dictionaryReaderStub = new DictionaryReaderStub();

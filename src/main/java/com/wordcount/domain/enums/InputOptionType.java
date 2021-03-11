@@ -7,6 +7,6 @@ public enum InputOptionType {
     public static final String prefix = "-";
 
     public String format() {
-        return new StringBuilder(prefix).append(this.name()).toString();
+        return prefix + this.name();
     }
 }
