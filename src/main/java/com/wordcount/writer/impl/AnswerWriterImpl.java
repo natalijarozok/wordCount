@@ -1,5 +1,6 @@
 package com.wordcount.writer.impl;
 
+import com.wordcount.domain.dto.Word;
 import com.wordcount.domain.dto.WordsStatistic;
 import com.wordcount.writer.AnswerWriter;
 import com.wordcount.writer.ConsoleWriter;
@@ -44,10 +45,19 @@ public class AnswerWriterImpl implements AnswerWriter {
     }
 
     private String getWordsIndexInfo() {
-        StringBuilder answer = new StringBuilder("\nIndex:\n");
-        for (String word : _wordStatistics.getWordsIndex()) {
-            answer.append(String.format("%s\n", word));
+        StringBuilder info = new StringBuilder("\nIndex")
+                .append(getUnknownWordsInfo())
+                .append(":\n");
+
+        for (Word word : _wordStatistics.getWordsIndex()) {
+            info.append(String.format("%s%s\n", word.getValue(), word.wordIsKnown() ? "" : "*"));
         }
-        return answer.toString();
+        return info.toString();
+    }
+
+    private String getUnknownWordsInfo() {
+        return _wordStatistics.getUnknownWordCount() != null ?
+                String.format(" (unknown: %d)", _wordStatistics.getUnknownWordCount())
+                : "";
     }
 }

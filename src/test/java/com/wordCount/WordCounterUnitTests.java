@@ -25,6 +25,7 @@ public class WordCounterUnitTests {
         WordsStatisticCounter sut = new WordsStatisticCounter(
                 testData.getInputText(),
                 testData.getStopWords(),
+                testData.getDictionaryWords(),
                 new WordsStatisticOptions(testData.getIncludeWordIndex())
         );
         WordsStatistic actualWordStatistics = sut.count();
@@ -33,6 +34,7 @@ public class WordCounterUnitTests {
                 testData.getExpectedWordCount(),
                 testData.getExpectedUniqueWordCount(),
                 testData.getExpectedAverageWordLength(),
+                testData.getUnknownWordCount(),
                 testData.getExpectedWordIndex()
         );
 

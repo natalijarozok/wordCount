@@ -1,5 +1,7 @@
 package com.wordCount.data;
 
+import com.wordcount.domain.dto.Word;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,11 +13,20 @@ public class TestDataStructure {
         return _inputText;
     }
 
+
     private List<String> _stopWords;
 
     public List<String> getStopWords() {
         return _stopWords;
     }
+
+
+    private List<String> _dictionaryWords;
+
+    public List<String> getDictionaryWords() {
+        return _dictionaryWords;
+    }
+
 
     private boolean _includeWordIndex;
 
@@ -27,11 +38,13 @@ public class TestDataStructure {
         this._includeWordIndex = newIncludeWordIndex;
     }
 
+
     private int _expectedWordCount;
 
     public int getExpectedWordCount() {
         return _expectedWordCount;
     }
+
 
     private int _expectedUniqueWordCount;
 
@@ -39,32 +52,43 @@ public class TestDataStructure {
         return _expectedUniqueWordCount;
     }
 
+
     private float _expectedAverageWordLength;
 
     public float getExpectedAverageWordLength() {
         return _expectedAverageWordLength;
     }
 
-    private List<String> _expectedWordIndex;
 
-    public void setExpectedWordIndex(List<String> newExpectedWordIndex) {
+    private Integer _expectedUnknownWordCount;
+
+    public Integer getUnknownWordCount() {
+        return _expectedUnknownWordCount;
+    }
+
+
+    private List<Word> _expectedWordIndex;
+
+    public void setExpectedWordIndex(List<Word> newExpectedWordIndex) {
         this._expectedWordIndex = newExpectedWordIndex;
     }
 
-    public List<String> getExpectedWordIndex() {
+    public List<Word> getExpectedWordIndex() {
         return _expectedWordIndex;
     }
 
     public TestDataStructure(
             List<String> inputText,
             List<String> stopWords,
-            int wordCount,
-            int uniqueWordCount
+            List<String> dictionaryWords,
+            int expectedWordCount,
+            int expectedUniqueWordCount
     ) {
         _inputText = inputText;
         _stopWords = stopWords;
-        _expectedWordCount = wordCount;
-        _expectedUniqueWordCount = uniqueWordCount;
+        _dictionaryWords = dictionaryWords;
+        _expectedWordCount = expectedWordCount;
+        _expectedUniqueWordCount = expectedUniqueWordCount;
         _expectedAverageWordLength = 0f;
         _expectedWordIndex = Collections.emptyList();
     }
@@ -72,17 +96,21 @@ public class TestDataStructure {
     public TestDataStructure(
             List<String> inputText,
             List<String> stopWords,
+            List<String> dictionaryWords,
             int expectedWordCount,
             int expectedUniqueWordCount,
             float expectedAverageWordLength,
-            List<String> wordIndex
+            Integer expectedUnknownWordCount,
+            List<Word> expectedWordIndex
     ) {
         _inputText = inputText;
         _stopWords = stopWords;
+        _dictionaryWords = dictionaryWords;
         _expectedWordCount = expectedWordCount;
         _expectedUniqueWordCount = expectedUniqueWordCount;
         _expectedAverageWordLength = expectedAverageWordLength;
-        _expectedWordIndex = wordIndex;
+        _expectedUnknownWordCount = expectedUnknownWordCount;
+        _expectedWordIndex = expectedWordIndex;
     }
 
     public void putDelimiterIntoText(String delimiter) {
@@ -97,9 +125,11 @@ public class TestDataStructure {
         return new TestDataStructure(
                 this._inputText,
                 this._stopWords,
+                this._dictionaryWords,
                 this._expectedWordCount,
                 this._expectedUniqueWordCount,
                 this._expectedAverageWordLength,
+                this._expectedUnknownWordCount,
                 this._expectedWordIndex
         );
     }

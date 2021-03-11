@@ -4,18 +4,19 @@ import com.wordCount.data.TestDataStructure;
 import com.wordCount.data.TestInput;
 import com.wordCount.mock.*;
 import com.wordcount.controller.WordsStatisticController;
+import com.wordcount.domain.dto.Word;
 import com.wordcount.domain.dto.WordsStatisticOptions;
 import com.wordcount.writer.AnswerWriter;
 import com.wordcount.writer.impl.AnswerWriterImpl;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class WordCounterIntegrationTests {
 
-    private StopWordsReaderStub stopWordsReaderStub;
-    private ConsoleWriterSpy consoleWriterSpy;
+    private StopWordsReaderStub stopWordsReaderStub = new StopWordsReaderStub();
+    private DictionaryReaderStub dictionaryReaderStub = new DictionaryReaderStub();
+    private ConsoleWriterSpy consoleWriterSpy = new ConsoleWriterSpy();
     private AnswerWriter answerWriter;
 
 
@@ -32,8 +33,6 @@ public class WordCounterIntegrationTests {
     }
 
     private void checkThatWordsStatisticIsCorrect(TextReaderStub readerStub) {
-        stopWordsReaderStub = new StopWordsReaderStub();
-        consoleWriterSpy = new ConsoleWriterSpy();
         answerWriter = new AnswerWriterImpl(consoleWriterSpy);
         List<TestDataStructure> testInput = new TestInput().get();
 
@@ -45,10 +44,12 @@ public class WordCounterIntegrationTests {
     private void checkThatWordsStatisticIsCorrect(TestDataStructure testData, TextReaderStub readerStub) {
         readerStub.setup(testData.getInputText());
         stopWordsReaderStub.setup(testData.getStopWords());
+        dictionaryReaderStub.setup(testData.getDictionaryWords());
 
         WordsStatisticController sut = new WordsStatisticController(
                 readerStub,
                 stopWordsReaderStub,
+                dictionaryReaderStub,
                 answerWriter,
                 new WordsStatisticOptions(testData.getIncludeWordIndex())
         );
@@ -57,20 +58,28 @@ public class WordCounterIntegrationTests {
     }
 
     private String getExpectedAnswer(TestDataStructure testData) {
-        String expectedAnswer =
+        StringBuilder expectedAnswer = new StringBuilder(
                 String.format(
                         "Number of words: %d, unique: %d; average word length: %.2f characters",
                         testData.getExpectedWordCount(),
                         testData.getExpectedUniqueWordCount(),
                         testData.getExpectedAverageWordLength()
-                );
+                )
+        );
 
-        if (testData.getIncludeWordIndex() == true) {
-            expectedAnswer += "\nIndex:\n";
-            for (String word : testData.getExpectedWordIndex()) {
-                expectedAnswer += String.format("%s\n", word);
+        if (testData.getIncludeWordIndex()) {
+            expectedAnswer.append("\nIndex");
+            if (testData.getUnknownWordCount() != null) {
+                expectedAnswer.append(String.format(" (unknown: %d)", testData.getUnknownWordCount()));
+            }
+
+            expectedAnswer.append(":\n");
+
+            for (Word word : testData.getExpectedWordIndex()) {
+                expectedAnswer.append(String.format("%s%s\n", word.getValue(), word.wordIsKnown() ? "" : "*"));
             }
         }
-        return expectedAnswer;
+
+        return expectedAnswer.toString();
     }
 }

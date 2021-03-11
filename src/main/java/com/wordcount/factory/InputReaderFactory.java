@@ -9,14 +9,17 @@ public class InputReaderFactory {
     private String _fileName;
 
     public InputReaderFactory(String fileName) {
-        _fileName = fileName != null ? fileName : "";
+        _fileName = fileName;
     }
 
     public InputReader create() {
 
+        if (_fileName == null) return null;
+
         InputReader reader;
 
         switch (_fileName) {
+
             case "":
                 reader = new ConsoleReaderImpl();
                 break;

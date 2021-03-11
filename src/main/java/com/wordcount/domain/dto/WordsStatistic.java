@@ -21,10 +21,16 @@ public class WordsStatistic {
         return _averageWordLength;
     }
 
-    private List<String> _wordsIndex;
+    private List<Word> _wordsIndex;
 
-    public List<String> getWordsIndex() {
+    public List<Word> getWordsIndex() {
         return _wordsIndex;
+    }
+
+    private Integer _unknownWordCount;
+
+    public Integer getUnknownWordCount() {
+        return _unknownWordCount;
     }
 
     public WordsStatistic(
@@ -32,19 +38,21 @@ public class WordsStatistic {
             int uniqueWordCount,
             float averageWordLength
     ) {
-        this(wordCount, uniqueWordCount, averageWordLength, null);
+        this(wordCount, uniqueWordCount, averageWordLength, null, null);
     }
 
     public WordsStatistic(
             int wordCount,
             int uniqueWordCount,
             float averageWordLength,
-            List<String> wordsIndex
+            Integer unknownWordCount,
+            List<Word> wordsIndex
     ) {
         _wordCount = wordCount;
         _uniqueWordCount = uniqueWordCount;
         _averageWordLength = averageWordLength;
         _wordsIndex = wordsIndex;
+        _unknownWordCount = unknownWordCount;
     }
 
     @Override
@@ -55,6 +63,7 @@ public class WordsStatistic {
         return _wordCount == that._wordCount &&
                 _uniqueWordCount == that._uniqueWordCount &&
                 _averageWordLength == that._averageWordLength &&
+                _unknownWordCount == that._unknownWordCount &&
                 ((_wordsIndex == null && that._wordsIndex == null) || _wordsIndex.equals(that._wordsIndex));
     }
 }
