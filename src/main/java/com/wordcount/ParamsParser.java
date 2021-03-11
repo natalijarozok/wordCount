@@ -56,7 +56,7 @@ public class ParamsParser {
     private void setDictionaryFileName() {
         Option option = findOption(InputOptionType.DICTIONARY);
         if (option != null)
-            _dictionaryFileName = option.getValue();
+            _dictionaryFileName = option.getValue().isEmpty() ? null : option.getValue();
     }
 
     private void setInputOptions() {
@@ -93,22 +93,22 @@ public class ParamsParser {
 class Option {
     private String _name;
 
-    public String getName() {
+    String getName() {
         return _name;
     }
 
     private String _value;
 
-    public String getValue() {
+    String getValue() {
         return _value;
     }
 
-    public Option(String name, String value) {
+    Option(String name, String value) {
         _name = name;
         _value = value;
     }
 
-    public boolean isValid() {
+    boolean isValid() {
         return Arrays.stream(InputOptionType.values())
                 .filter(option -> option.format().equalsIgnoreCase(this._name))
                 .count() > 0;
