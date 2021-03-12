@@ -1,5 +1,6 @@
 package com.wordcount.controller;
 
+import com.wordcount.ActionQueue;
 import com.wordcount.domain.WordsStatisticCounter;
 import com.wordcount.domain.dto.WordsStatistic;
 import com.wordcount.domain.dto.WordsStatisticOptions;
@@ -28,6 +29,15 @@ public class WordsStatisticController {
         _dictionaryReader = dictionaryReader;
         _writer = writer;
         _wordsStatisticOptions = wordsStatisticOptions;
+    }
+
+    public void count() {
+        do {
+            ActionQueue.getInstance().executeFirstAction();
+            countWordsStatistic();
+            ActionQueue.getInstance().executeFirstAction();
+        } while (ActionQueue.getInstance().isNotEmpty());
+
     }
 
     public void countWordsStatistic() {
