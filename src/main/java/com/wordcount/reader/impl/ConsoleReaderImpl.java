@@ -13,7 +13,7 @@ public class ConsoleReaderImpl implements InputReader {
     public List<String> read() {
         System.out.print("Enter text: ");
         String text = new Scanner(System.in).nextLine();
-        ActionQueue.getInstance().add(this, text.length());
+        ActionQueue.getInstance().add(text.length());
         return Collections.singletonList(text);
     }
 }

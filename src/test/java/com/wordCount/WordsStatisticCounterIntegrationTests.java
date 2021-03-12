@@ -53,7 +53,7 @@ public class WordsStatisticCounterIntegrationTests {
                 answerWriter,
                 new WordsStatisticOptions(testData.getIncludeWordIndex())
         );
-        sut.countWordsStatistic();
+        sut.execute();
         consoleWriterSpy.shouldWriteText(getExpectedAnswer(testData));
     }
 

@@ -16,7 +16,8 @@ public class WordCount {
 
     public static void main(String[] args) {
         ParamsParser parser = new ParamsParser(args);
-        InputReader textReader = new InputReaderFactory(parser.getTextFileName()).create();
+        parser.parse();
+        InputReader inputDataReader = new InputReaderFactory(parser.getTextFileName()).create();
         InputReader stopWordsReader = new InputReaderFactory(STOP_WORDS_FILE_NAME).create();
         InputReader dictionaryReader = new InputReaderFactory(parser.getDictionaryFileName()).create();
         ConsoleWriter consoleWriter = new ConsoleWriterImpl();
@@ -24,12 +25,12 @@ public class WordCount {
         WordsStatisticOptions runTimeOptions = parser.getStatisticsOptions();
 
         WordsStatisticController controller = new WordsStatisticController(
-                textReader,
+                inputDataReader,
                 stopWordsReader,
                 dictionaryReader,
                 answerWriter,
                 runTimeOptions
         );
-        controller.countWordsStatistic();
+        controller.execute();
     }
 }

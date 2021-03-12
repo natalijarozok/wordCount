@@ -4,6 +4,7 @@ import com.wordcount.ActionQueue;
 import com.wordcount.domain.WordsStatisticCounter;
 import com.wordcount.domain.dto.WordsStatistic;
 import com.wordcount.domain.dto.WordsStatisticOptions;
+import com.wordcount.domain.enums.ActionType;
 import com.wordcount.reader.InputReader;
 import com.wordcount.writer.AnswerWriter;
 
@@ -16,6 +17,10 @@ public class WordsStatisticController {
     private final InputReader _dictionaryReader;
     private final AnswerWriter _writer;
     private final WordsStatisticOptions _wordsStatisticOptions;
+
+    private List<String> _inputText;
+    private List<String> _stopWords;
+    private List<String> _dictionaryWords;
 
     public WordsStatisticController(
             InputReader reader,
@@ -31,26 +36,25 @@ public class WordsStatisticController {
         _wordsStatisticOptions = wordsStatisticOptions;
     }
 
-    public void count() {
+    public void execute() {
         do {
-            ActionQueue.getInstance().executeFirstAction();
-            countWordsStatistic();
-            ActionQueue.getInstance().executeFirstAction();
-        } while (ActionQueue.getInstance().isNotEmpty());
-
+            ActionQueue.getInstance().executeAction();
+            readData();
+            ActionQueue.getInstance().executeActionIfEqualsTo(ActionType.TERMINATE);
+            countAndShowStatistic();
+        }
+        while (ActionQueue.getInstance().isNotEmpty());
     }
 
-    public void countWordsStatistic() {
-        List<String> inputText = readText();
-        List<String> stopWords = readStopWords();
-        List<String> dictionaryWords = readDictionary();
-        WordsStatistic wordsStatistic = countStatistic(
-                inputText,
-                stopWords,
-                dictionaryWords,
-                _wordsStatisticOptions
-        );
-        writeWordCount(wordsStatistic);
+    public void countAndShowStatistic() {
+        countStatistic();
+        writeStatistic(countStatistic());
+    }
+
+    private void readData() {
+        _inputText = readText();
+        _stopWords = readStopWords();
+        _dictionaryWords = readDictionary();
     }
 
     private List<String> readText() {
@@ -65,22 +69,17 @@ public class WordsStatisticController {
         return _dictionaryReader == null ? null : _dictionaryReader.read();
     }
 
-    private WordsStatistic countStatistic(
-            List<String> text,
-            List<String> stopWords,
-            List<String> dictionaryWords,
-            WordsStatisticOptions wordsStatisticOptions
-    ) {
+    private WordsStatistic countStatistic() {
         WordsStatisticCounter wordsStatisticCounter = new WordsStatisticCounter(
-                text,
-                stopWords,
-                dictionaryWords,
-                wordsStatisticOptions
+                _inputText,
+                _stopWords,
+                _dictionaryWords,
+                _wordsStatisticOptions
         );
         return wordsStatisticCounter.count();
     }
 
-    private void writeWordCount(WordsStatistic wordsStatistic) {
+    private void writeStatistic(WordsStatistic wordsStatistic) {
         _writer.write(wordsStatistic);
     }
 }

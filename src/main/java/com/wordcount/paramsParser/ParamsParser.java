@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 public class ParamsParser {
     private final String[] _args;
+
     private List<Option> _inputOptions;
 
     private String _textFileName = "";
@@ -32,10 +33,9 @@ public class ParamsParser {
 
     public ParamsParser(String[] args) {
         _args = args;
-        parse();
     }
 
-    private void parse() {
+    public void parse() {
         if (_args.length == 0) return;
         setInputOptions();
         setTextFileName();

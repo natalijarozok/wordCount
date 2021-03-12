@@ -1,8 +1,6 @@
 package com.wordcount;
 
 import com.wordcount.domain.enums.ActionType;
-import com.wordcount.reader.InputReader;
-import com.wordcount.reader.impl.FileReaderImpl;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -11,7 +9,7 @@ public final class ActionQueue {
 
     private static ActionQueue instance;
 
-    private static final Queue<ActionQueueMember> _queue = new LinkedList<>();
+    private final Queue<ActionType> _queue = new LinkedList<>();
 
     private ActionQueue() {
     }
@@ -23,71 +21,44 @@ public final class ActionQueue {
         return instance;
     }
 
-    public void add(InputReader invoker) {
-        if (!(invoker instanceof FileReaderImpl)) return;
-        _queue.add(new ActionQueueMember(ActionType.CONTINUE));
-        _queue.add(new ActionQueueMember(ActionType.TERMINATE));
-
+    public void add(ActionType actionType) {
+        _queue.add(actionType);
     }
 
-    public void add(InputReader invoker, int inputTextLength) {
-        if (!(invoker instanceof FileReaderImpl)) return;
+    public void add(int inputTextLength) {
         switch (inputTextLength) {
             case 0:
-                _queue.add(new ActionQueueMember(ActionType.TERMINATE));
+                add(ActionType.TERMINATE);
                 break;
 
             default:
-                _queue.add(new ActionQueueMember(ActionType.CONTINUE));
-                _queue.add(new ActionQueueMember(ActionType.READ, invoker));
-
+                add(ActionType.EXECUTE);
+                break;
         }
     }
 
-    public void executeFirstAction() {
-        ActionQueueMember member = _queue.poll();
-        executeAction(member);
+    public void executeAction() {
+        ActionType actionType = _queue.poll();
+        if (actionType != null)
+            executeAction(actionType);
+    }
+
+    public void executeActionIfEqualsTo(ActionType action) {
+        if (_queue.peek() == action)
+            executeAction();
     }
 
     public boolean isNotEmpty() {
         return _queue.size() > 0;
     }
 
-    private void executeAction(ActionQueueMember member) {
-        switch (member.getAction()) {
+    private void executeAction(ActionType actionType) {
+        switch (actionType) {
             case TERMINATE:
                 System.exit(0);
                 break;
-
-            case CONTINUE:
-                break;
-
-            case READ:
-                member.getReader().read();
+            case EXECUTE:
                 break;
         }
-    }
-}
-
-class ActionQueueMember {
-    private ActionType _action;
-
-    public ActionType getAction() {
-        return _action;
-    }
-
-    private InputReader _reader;
-
-    public InputReader getReader() {
-        return _reader;
-    }
-
-    public ActionQueueMember(ActionType action) {
-        _action = action;
-    }
-
-    public ActionQueueMember(ActionType action, InputReader reader) {
-        _action = action;
-        _reader = reader;
     }
 }
