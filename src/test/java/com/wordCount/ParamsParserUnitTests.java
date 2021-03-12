@@ -39,9 +39,10 @@ public class ParamsParserUnitTests {
         );
 
         ParamsParser sut = new ParamsParser(args);
+        sut.parse();
 
         assertEquals(testData.getExpectedTextFileName(), sut.getTextFileName());
-        assertEquals(testData.getExpectedWordsStatisticOption(), sut.getStatisticsOptions());
+        assertEquals(testData.getExpectedIncludeWordsIndex(), sut.getIncludeWordsIndex());
         assertEquals(testData.getExpectedDictionaryFileName(), sut.getDictionaryFileName());
     }
 

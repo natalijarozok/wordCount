@@ -4,7 +4,6 @@ import com.wordCount.data.wordsStatistic.TestDataStructure;
 import com.wordCount.data.wordsStatistic.TestInput;
 import com.wordcount.domain.WordsStatisticCounter;
 import com.wordcount.domain.dto.WordsStatistic;
-import com.wordcount.domain.dto.WordsStatisticOptions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -26,7 +25,7 @@ public class WordsStatisticCounterUnitTests {
                 testData.getInputText(),
                 testData.getStopWords(),
                 testData.getDictionaryWords(),
-                new WordsStatisticOptions(testData.getIncludeWordIndex())
+                testData.getIncludeWordIndex()
         );
         WordsStatistic actualWordStatistics = sut.count();
 

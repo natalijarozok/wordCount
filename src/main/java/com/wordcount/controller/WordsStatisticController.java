@@ -16,7 +16,7 @@ public class WordsStatisticController {
     private final InputReader _stopWordsReader;
     private final InputReader _dictionaryReader;
     private final AnswerWriter _writer;
-    private final WordsStatisticOptions _wordsStatisticOptions;
+    private final boolean _includeWordsIndex;
 
     private List<String> _inputText;
     private List<String> _stopWords;
@@ -27,13 +27,13 @@ public class WordsStatisticController {
             InputReader stopWordsReader,
             InputReader dictionaryReader,
             AnswerWriter writer,
-            WordsStatisticOptions wordsStatisticOptions
+            boolean includeWordsIndex
     ) {
         _reader = reader;
         _stopWordsReader = stopWordsReader;
         _dictionaryReader = dictionaryReader;
         _writer = writer;
-        _wordsStatisticOptions = wordsStatisticOptions;
+        _includeWordsIndex = includeWordsIndex;
     }
 
     public void execute() {
@@ -74,7 +74,7 @@ public class WordsStatisticController {
                 _inputText,
                 _stopWords,
                 _dictionaryWords,
-                _wordsStatisticOptions
+                _includeWordsIndex
         );
         return wordsStatisticCounter.count();
     }

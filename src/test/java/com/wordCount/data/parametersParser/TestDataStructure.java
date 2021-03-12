@@ -1,7 +1,5 @@
 package com.wordCount.data.parametersParser;
 
-import com.wordcount.domain.dto.WordsStatisticOptions;
-
 public class TestDataStructure {
     private String _fileName;
 
@@ -29,10 +27,10 @@ public class TestDataStructure {
     }
 
 
-    private WordsStatisticOptions _expectedWordsStatisticOption;
+    private boolean _expectedIncludeWordsIndex;
 
-    public WordsStatisticOptions getExpectedWordsStatisticOption() {
-        return _expectedWordsStatisticOption;
+    public boolean getExpectedIncludeWordsIndex() {
+        return _expectedIncludeWordsIndex;
     }
 
     private String _expectedDictionaryFileName;
@@ -47,14 +45,14 @@ public class TestDataStructure {
             String indexOption,
             String dictionaryOption,
             String expectedTextFileName,
-            WordsStatisticOptions expectedWordsStatisticOption,
+            boolean expectedIncludeWordsIndex,
             String expectedDictionaryFileName
     ) {
         _fileName = fileName;
         _indexOption = indexOption;
         _dictionaryOption = dictionaryOption;
         _expectedTextFileName = expectedTextFileName;
-        _expectedWordsStatisticOption = expectedWordsStatisticOption;
+        _expectedIncludeWordsIndex = expectedIncludeWordsIndex;
         _expectedDictionaryFileName = expectedDictionaryFileName;
     }
 }

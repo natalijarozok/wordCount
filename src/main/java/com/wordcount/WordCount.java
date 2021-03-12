@@ -1,7 +1,6 @@
 package com.wordcount;
 
 import com.wordcount.controller.WordsStatisticController;
-import com.wordcount.domain.dto.WordsStatisticOptions;
 import com.wordcount.factory.InputReaderFactory;
 import com.wordcount.paramsParser.ParamsParser;
 import com.wordcount.reader.InputReader;
@@ -22,14 +21,14 @@ public class WordCount {
         InputReader dictionaryReader = new InputReaderFactory(parser.getDictionaryFileName()).create();
         ConsoleWriter consoleWriter = new ConsoleWriterImpl();
         AnswerWriter answerWriter = new AnswerWriterImpl(consoleWriter);
-        WordsStatisticOptions runTimeOptions = parser.getStatisticsOptions();
+        boolean includeWordsIndex = parser.getIncludeWordsIndex();
 
         WordsStatisticController controller = new WordsStatisticController(
                 inputDataReader,
                 stopWordsReader,
                 dictionaryReader,
                 answerWriter,
-                runTimeOptions
+                includeWordsIndex
         );
         controller.execute();
     }

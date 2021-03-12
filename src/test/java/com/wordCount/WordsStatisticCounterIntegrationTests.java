@@ -5,7 +5,6 @@ import com.wordCount.data.wordsStatistic.TestInput;
 import com.wordCount.mock.*;
 import com.wordcount.controller.WordsStatisticController;
 import com.wordcount.domain.dto.Word;
-import com.wordcount.domain.dto.WordsStatisticOptions;
 import com.wordcount.writer.AnswerWriter;
 import com.wordcount.writer.impl.AnswerWriterImpl;
 import org.junit.jupiter.api.Test;
@@ -51,7 +50,7 @@ public class WordsStatisticCounterIntegrationTests {
                 stopWordsReaderStub,
                 dictionaryReaderStub,
                 answerWriter,
-                new WordsStatisticOptions(testData.getIncludeWordIndex())
+                testData.getIncludeWordIndex()
         );
         sut.execute();
         consoleWriterSpy.shouldWriteText(getExpectedAnswer(testData));

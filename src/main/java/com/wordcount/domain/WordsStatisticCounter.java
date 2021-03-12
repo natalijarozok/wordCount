@@ -2,7 +2,6 @@ package com.wordcount.domain;
 
 import com.wordcount.domain.dto.Word;
 import com.wordcount.domain.dto.WordsStatistic;
-import com.wordcount.domain.dto.WordsStatisticOptions;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -15,7 +14,7 @@ public class WordsStatisticCounter {
     private final List<String> _text;
     private final List<String> _stopWords;
     private final List<String> _dictionaryWords;
-    private final WordsStatisticOptions _wordsStatisticOptions;
+    private final boolean _includeWordsIndex;
 
     private List<Word> _words;
 
@@ -23,12 +22,12 @@ public class WordsStatisticCounter {
             List<String> text,
             List<String> stopWords,
             List<String> dictionaryWords,
-            WordsStatisticOptions wordsStatisticOptions
+            boolean includeWordsIndex
     ) {
         _text = text;
         _stopWords = stopWords != null ? stopWords : Collections.emptyList();
         _dictionaryWords = dictionaryWords;
-        _wordsStatisticOptions = wordsStatisticOptions;
+        _includeWordsIndex = includeWordsIndex;
     }
 
     public WordsStatistic count() {
@@ -91,7 +90,7 @@ public class WordsStatisticCounter {
     }
 
     private List<Word> getWordsIndex() {
-        return _wordsStatisticOptions.isWordIndexRequired() ? sortWords(_words) : null;
+        return _includeWordsIndex ? sortWords(_words) : null;
     }
 
     private boolean isStringAWord(String rawString) {

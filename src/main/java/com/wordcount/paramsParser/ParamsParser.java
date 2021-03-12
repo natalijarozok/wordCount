@@ -1,6 +1,5 @@
 package com.wordcount.paramsParser;
 
-import com.wordcount.domain.dto.WordsStatisticOptions;
 import com.wordcount.domain.enums.InputOptionType;
 
 import java.util.Arrays;
@@ -19,10 +18,10 @@ public class ParamsParser {
         return _textFileName;
     }
 
-    private final WordsStatisticOptions _statisticsOptions = new WordsStatisticOptions(false);
+    private boolean _includeWordsIndex = false;
 
-    public WordsStatisticOptions getStatisticsOptions() {
-        return _statisticsOptions;
+    public boolean getIncludeWordsIndex() {
+        return _includeWordsIndex;
     }
 
     private String _dictionaryFileName;
@@ -50,7 +49,7 @@ public class ParamsParser {
 
     private void setStatisticsOptions() {
         if (isOptionSpecified(InputOptionType.INDEX))
-            _statisticsOptions.showWordsIndex();
+            _includeWordsIndex = true;
     }
 
     private void setDictionaryFileName() {
