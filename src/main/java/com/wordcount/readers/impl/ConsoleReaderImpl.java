@@ -1,17 +1,15 @@
 package com.wordcount.readers.impl;
 
-import com.wordcount.readers.InputReader;
+import com.wordcount.readers.ConsoleReader;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
-public class ConsoleReaderImpl implements InputReader {
+public class ConsoleReaderImpl implements ConsoleReader {
 
     @Override
-    public List<String> read() {
+    public String read() {
         System.out.print("Enter text: ");
         String text = new Scanner(System.in).nextLine();
-        return Arrays.asList(text);
+        return text;
     }
 }
