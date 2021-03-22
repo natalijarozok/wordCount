@@ -3,7 +3,6 @@ package com.wordcount.controller;
 import com.wordcount.ActionQueue;
 import com.wordcount.domain.WordsStatisticCounter;
 import com.wordcount.domain.dto.WordsStatistic;
-import com.wordcount.domain.dto.WordsStatisticOptions;
 import com.wordcount.domain.enums.ActionType;
 import com.wordcount.reader.InputReader;
 import com.wordcount.writer.AnswerWriter;
@@ -46,7 +45,7 @@ public class WordsStatisticController {
         while (ActionQueue.getInstance().isNotEmpty());
     }
 
-    public void countAndShowStatistic() {
+    private void countAndShowStatistic() {
         countStatistic();
         writeStatistic(countStatistic());
     }
