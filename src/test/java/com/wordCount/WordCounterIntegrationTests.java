@@ -1,47 +1,46 @@
 package com.wordCount;
 
-import com.wordCount.mocks.ConsoleTextReaderStub;
 import com.wordCount.mocks.ConsoleWriterSpy;
 import com.wordCount.mocks.StopWordsReaderStub;
-import com.wordCount.paramsSource.TestParam;
-import com.wordCount.paramsSource.TestParamValuesSource;
+import com.wordCount.mocks.UserInputReaderStub;
 import com.wordcount.controllers.WordCounterController;
-import com.wordcount.writers.AnswerWriter;
-import com.wordcount.writers.impl.AnswerWriterImpl;
+import com.wordcount.writers.UserOutputWriter;
+import com.wordcount.writers.impl.UserOutputWriterImpl;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import static com.wordCount.data.DataSource.getData;
 
 public class WordCounterIntegrationTests {
 
     @Test
     public void word_counting() {
-
-        String text;
-        List<String> stopWords;
-        int wordCount;
-
-        ConsoleTextReaderStub readerStub = new ConsoleTextReaderStub();
+        UserInputReaderStub readerStub = new UserInputReaderStub();
         StopWordsReaderStub stopWordsReaderStub = new StopWordsReaderStub();
         ConsoleWriterSpy consoleWriterSpy = new ConsoleWriterSpy();
-        AnswerWriter answerWriter = new AnswerWriterImpl(consoleWriterSpy);
+        UserOutputWriter answerWriter = new UserOutputWriterImpl(consoleWriterSpy);
 
-        HashMap<TestParam, Integer> params = TestParamValuesSource.getTextParamValues();
+        getData().forEach(testData ->
+                {
+                    readerStub.setup(testData.getTestInput().getInputText());
+                    stopWordsReaderStub.setup(testData.getTestInput().getStopWords());
 
-        for (Map.Entry<TestParam, Integer> param : params.entrySet()) {
-            text = param.getKey().getInputText();
-            stopWords = param.getKey().getStopWords();
-            wordCount = param.getValue();
+                    WordCounterController sut = new WordCounterController(
+                            readerStub,
+                            stopWordsReaderStub,
+                            answerWriter
+                    );
+                    sut.countWords();
 
-            readerStub.setup(text);
-            stopWordsReaderStub.setup(stopWords);
+                    consoleWriterSpy
+                            .withInput(testData.getTestInput())
+                            .shouldWrite(
+                                    String.format(
+                                            "Number of words: %d",
+                                            testData.getExpectedOutput().getExpectedWordCount()
+                                    )
+                            );
+                }
+        );
 
-            WordCounterController sut = new WordCounterController(readerStub, stopWordsReaderStub, answerWriter);
-            sut.countWords();
-
-            consoleWriterSpy.shouldWriteText(String.format("Number of words: %d", wordCount));
-        }
     }
 }

@@ -2,41 +2,43 @@ package com.wordcount.domain;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class WordCounter {
 
-    private TextParser _textParser;
-    private List<String> _stopWords;
+    private final TextParser textParser = new TextParser();
+    private final List<String> stopWords;
 
-    public WordCounter(String text, List<String> stopWords) {
-        _textParser = new TextParser(text);
-        _stopWords = stopWords != null ? stopWords : Collections.emptyList();
+    private final Pattern pattern = Pattern.compile("^[a-zA-Z]*$");
+
+    public WordCounter(List<String> stopWords) {
+        this.stopWords = stopWords != null ? stopWords : Collections.emptyList();
     }
 
-    public int count() {
-        List<String> tokens = getTokens();
-        return countWords(tokens);
+    public long countWords(String text) {
+        List<String> wordCandidates = parse(text);
+        return countWords(wordCandidates);
     }
 
-    private List<String> getTokens() {
-        return _textParser.parse();
+    private List<String> parse(String text) {
+        return textParser.parse(text);
     }
 
-    private int countWords(List<String> tokens) {
-        int wordCount = 0;
-        for (String rawString : tokens) {
-            if (isStringAWord(rawString) && isWordAllowed(rawString)) {
-                wordCount++;
-            }
-        }
-        return wordCount;
+    private long countWords(List<String> wordCandidates) {
+        return wordCandidates.stream()
+                .filter(this::isAnAllowedWord)
+                .count();
     }
 
-    private boolean isStringAWord(String rawString) {
-        return rawString.matches("^[a-zA-Z]*$");
+    private boolean isAnAllowedWord(String wordCandidate) {
+        return isAWord(wordCandidate) && isAllowed(wordCandidate);
     }
 
-    private boolean isWordAllowed(String word) {
-        return !_stopWords.contains(word);
+    private boolean isAWord(String wordCandidate) {
+        return pattern.matcher(wordCandidate).matches();
+    }
+
+    private boolean isAllowed(String word) {
+        return !stopWords.contains(word);
     }
 }
