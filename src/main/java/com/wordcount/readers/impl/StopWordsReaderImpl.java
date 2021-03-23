@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.URL;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StopWordsReaderImpl implements StopWordsReader {
@@ -18,7 +18,7 @@ public class StopWordsReaderImpl implements StopWordsReader {
     @Override
     public List<String> read() {
 
-        List<String> stopWords = Collections.emptyList();
+        List<String> stopWords = new ArrayList<>();
         String line;
 
         try {
@@ -29,7 +29,6 @@ public class StopWordsReaderImpl implements StopWordsReader {
         } catch (Exception e) {
             String errorMessage = e.getMessage();
         }
-        ;
 
         return stopWords;
     }
