@@ -1,10 +1,10 @@
 package com.wordcount.readers.impl;
 
-import com.wordcount.readers.ConsoleTextReader;
+import com.wordcount.readers.ConsoleReader;
 
 import java.util.Scanner;
 
-public class ConsoleTextReaderImpl implements ConsoleTextReader {
+public class ConsoleReaderImpl implements ConsoleReader {
 
     @Override
     public String read() {

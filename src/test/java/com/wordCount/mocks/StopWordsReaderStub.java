@@ -6,16 +6,14 @@ import java.util.List;
 
 public class StopWordsReaderStub implements StopWordsReader {
 
-    private List<String> _stopWords;
+    private List<String> stopWords;
 
     @Override
     public List<String> read() {
-        return _stopWords;
+        return stopWords;
     }
 
     public void setup(List<String> stopWords) {
-        _stopWords = stopWords;
+        this.stopWords = stopWords;
     }
-
-    ;
 }
