@@ -1,7 +1,9 @@
 package com.wordCount.mock;
 
+import com.wordCount.data.wordsStatistic.entity.TestData;
 import com.wordcount.writer.ConsoleWriter;
 
+import static com.wordCount.data.wordsStatistic.TestDataSource.errorMessageFor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ConsoleWriterSpy implements ConsoleWriter {
@@ -14,7 +16,7 @@ public class ConsoleWriterSpy implements ConsoleWriter {
         _actualText = outputText;
     }
 
-    public void shouldWriteText(String expectedText) {
-        assertEquals(expectedText, _actualText);
+    public void shouldWriteText(TestData testData, String expectedOutputText) {
+        assertEquals(expectedOutputText, _actualText, errorMessageFor(testData, expectedOutputText));
     }
 }

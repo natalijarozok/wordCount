@@ -1,43 +1,43 @@
 package com.wordCount;
 
-import com.wordCount.data.wordsStatistic.TestDataStructure;
-import com.wordCount.data.wordsStatistic.TestInput;
+import com.wordCount.data.wordsStatistic.TestDataSource;
+import com.wordCount.data.wordsStatistic.entity.TestData;
 import com.wordcount.domain.WordsStatisticCounter;
 import com.wordcount.domain.dto.WordsStatistic;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
+import static com.wordCount.data.wordsStatistic.TestDataSource.errorMessageFor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WordsStatisticCounterUnitTests {
 
     @Test
     public void words_statistic() {
-        List<TestDataStructure> testInput = new TestInput().get();
-        for (TestDataStructure testData : testInput) {
-            checkThatWordsStatisticIsCorrect(testData);
-        }
+        TestDataSource.getTestData().forEach(this::assertWordsStatisticIsCorrect);
     }
 
-    private void checkThatWordsStatisticIsCorrect(TestDataStructure testData) {
-        WordsStatisticCounter sut = new WordsStatisticCounter(
-                testData.getInputText(),
-                testData.getStopWords(),
-                testData.getDictionaryWords(),
-                testData.getIncludeWordIndex()
-        );
-        WordsStatistic actualWordStatistics = sut.count();
-
-        WordsStatistic expectedWordsStatistic = new WordsStatistic(
-                testData.getExpectedWordCount(),
-                testData.getExpectedUniqueWordCount(),
-                testData.getExpectedAverageWordLength(),
-                testData.getUnknownWordCount(),
-                testData.getExpectedWordIndex()
-        );
-
-        assertEquals(expectedWordsStatistic, actualWordStatistics);
+    private void assertWordsStatisticIsCorrect(TestData testData) {
+        WordsStatistic expectedWordsStatistic = getExpectedWordsStatistic(testData);
+        WordsStatistic actualWordStatistics = getWordsStatisticCounter(testData).count();
+        assertEquals(expectedWordsStatistic, actualWordStatistics, errorMessageFor(testData));
     }
 
+    private WordsStatisticCounter getWordsStatisticCounter(TestData testData) {
+        return new WordsStatisticCounter(
+                testData.getTestInput().getInputText(),
+                testData.getTestInput().getStopWords(),
+                testData.getTestInput().getDictionaryWords(),
+                testData.getTestInput().getIncludeWordIndex()
+        );
+    }
+
+    private WordsStatistic getExpectedWordsStatistic(TestData testData) {
+        return new WordsStatistic(
+                testData.getExpectedOutput().getExpectedCorrectWordCount(),
+                testData.getExpectedOutput().getExpectedUniqueWordCount(),
+                testData.getExpectedOutput().getExpectedAverageWordLength(),
+                testData.getExpectedOutput().getExpectedUnknownWordCount(),
+                testData.getExpectedOutput().getExpectedRawWordIndex()
+        );
+    }
 }

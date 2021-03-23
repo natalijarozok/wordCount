@@ -1,20 +1,17 @@
 package com.wordCount.data.parametersParser;
 
 
+import com.wordCount.data.parametersParser.entity.TestData;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
+import static com.wordCount.data.parametersParser.entity.TestData.data;
+
 public class TestDataSource {
-    private static final List<String> STOP_WORDS_EMPTY = Collections.emptyList();
-    private static final List<String> STOP_WORDS = Arrays.asList("the", "a", "on", "off");
 
-    private static final List<String> DICTIONARY_EMPTY = Collections.emptyList();
-    private static final List<String> DICTIONARY = Arrays.asList("big", "small", "little", "cat", "dog", "have", "has", "had");
-
-    public static List<TestDataStructure> getData() {
-        return new ArrayList<TestDataStructure>() {{
+    public static List<TestData> getTestData() {
+        return new ArrayList<TestData>() {{
             add(data(null, null, null, "", false, null));
             add(data(null, "-index", null, "", true, null));
             add(data(null, "-index", "-dictionary", "", true, null));
@@ -31,23 +28,5 @@ public class TestDataSource {
             add(data("mytext.txt", null, "-dictionary=", "mytext.txt", false, null));
             add(data("mytext.txt", null, "-dictionary=dic.txt", "mytext.txt", false, "dic.txt"));
         }};
-    }
-
-    private static TestDataStructure data(
-            String fileName,
-            String indexOption,
-            String dictionaryOption,
-            String expectedTextFileName,
-            boolean expectedIncludeWordsIndex,
-            String expectedDictionaryFileName
-    ) {
-        return new TestDataStructure(
-                fileName,
-                indexOption,
-                dictionaryOption,
-                expectedTextFileName,
-                expectedIncludeWordsIndex,
-                expectedDictionaryFileName
-        );
     }
 }

@@ -1,7 +1,7 @@
 package com.wordCount;
 
-import com.wordCount.data.parametersParser.TestDataStructure;
-import com.wordCount.data.parametersParser.TestInput;
+import com.wordCount.data.parametersParser.TestDataSource;
+import com.wordCount.data.parametersParser.entity.TestData;
 import com.wordcount.paramsParser.ParamsParser;
 import org.junit.jupiter.api.Test;
 
@@ -13,11 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ParamsParserUnitTests {
 
     @Test
-    public void parameters_parsing_is_correct() {
-        List<TestDataStructure> testInput = new TestInput().get();
-        for (TestDataStructure testData : testInput) {
-            checkThatParametersParsingIsCorrect(testData);
-        }
+    public void parameters_parsing() {
+        TestDataSource.getTestData().forEach(this::assertParametersParsingIsCorrect);
     }
 
     private String[] buildArgs(String fileName, String indexOption, String dictionaryOption) {
@@ -31,19 +28,19 @@ public class ParamsParserUnitTests {
         return args.stream().toArray(String[]::new);
     }
 
-    private void checkThatParametersParsingIsCorrect(TestDataStructure testData) {
+    private void assertParametersParsingIsCorrect(TestData testData) {
         String[] args = buildArgs(
-                testData.getFileName(),
-                testData.getIndexOption(),
-                testData.getDictionaryOption()
+                testData.getTestInput().getFileName(),
+                testData.getTestInput().getIndexOption(),
+                testData.getTestInput().getDictionaryOption()
         );
 
         ParamsParser sut = new ParamsParser(args);
         sut.parse();
 
-        assertEquals(testData.getExpectedTextFileName(), sut.getTextFileName());
-        assertEquals(testData.getExpectedIncludeWordsIndex(), sut.getIncludeWordsIndex());
-        assertEquals(testData.getExpectedDictionaryFileName(), sut.getDictionaryFileName());
+        assertEquals(testData.getExpectedOutput().getExpectedTextFileName(), sut.getTextFileName());
+        assertEquals(testData.getExpectedOutput().getExpectedIncludeWordsIndex(), sut.getIncludeWordsIndex());
+        assertEquals(testData.getExpectedOutput().getExpectedDictionaryFileName(), sut.getDictionaryFileName());
     }
 
 }

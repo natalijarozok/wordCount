@@ -35,4 +35,8 @@ public class Word {
                 _isKnown == that._isKnown;
     }
 
+    @Override
+    public String toString() {
+        return String.format("[value: %s, isKnown: %s]", _value, _isKnown);
+    }
 }
