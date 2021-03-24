@@ -1,11 +1,15 @@
 package com.wordCount;
 
-import com.wordCount.mocks.ConsoleWriterSpy;
-import com.wordCount.mocks.StopWordsReaderStub;
-import com.wordCount.mocks.UserInputReaderStub;
+import com.wordCount.mocks.ConsoleUserInput;
+import com.wordCount.mocks.ConsoleUserOutput;
+import com.wordCount.mocks.StopWordsReader;
 import com.wordcount.controllers.WordCounterController;
-import com.wordcount.writers.UserOutputWriter;
-import com.wordcount.writers.impl.UserOutputWriterImpl;
+import com.wordcount.inputOutput.IOCommunicator;
+import com.wordcount.inputOutput.impl.IOCommunicatorImpl;
+import com.wordcount.inputOutput.input.UserInputReader;
+import com.wordcount.inputOutput.input.impl.UserInputReaderImpl;
+import com.wordcount.inputOutput.output.UserOutputWriter;
+import com.wordcount.inputOutput.output.impl.UserOutputWriterImpl;
 import org.junit.jupiter.api.Test;
 
 import static com.wordCount.data.DataSource.getData;
@@ -14,29 +18,33 @@ public class WordCounterIntegrationTests {
 
     @Test
     public void word_counting() {
-        UserInputReaderStub readerStub = new UserInputReaderStub();
-        StopWordsReaderStub stopWordsReaderStub = new StopWordsReaderStub();
-        ConsoleWriterSpy consoleWriterSpy = new ConsoleWriterSpy();
-        UserOutputWriter answerWriter = new UserOutputWriterImpl(consoleWriterSpy);
+        ConsoleUserInput consoleInput = new ConsoleUserInput();
+        UserInputReader inputReader = new UserInputReaderImpl(consoleInput);
+
+        ConsoleUserOutput consoleOutput = new ConsoleUserOutput();
+        UserOutputWriter outputWriter = new UserOutputWriterImpl(consoleOutput);
+
+        IOCommunicator ioCommunicator = new IOCommunicatorImpl(inputReader, outputWriter);
+
+        StopWordsReader stopWords = new StopWordsReader();
 
         getData().forEach(testData ->
                 {
-                    readerStub.setup(testData.getTestInput().getInputText());
-                    stopWordsReaderStub.setup(testData.getTestInput().getStopWords());
+                    consoleInput.returns(testData.inputText());
+                    stopWords.contain(testData.stopWords());
 
                     WordCounterController sut = new WordCounterController(
-                            readerStub,
-                            stopWordsReaderStub,
-                            answerWriter
+                            ioCommunicator,
+                            stopWords
                     );
                     sut.countWords();
 
-                    consoleWriterSpy
-                            .withInput(testData.getTestInput())
-                            .shouldWrite(
+                    consoleOutput
+                            .forUserInput(testData)
+                            .writes(
                                     String.format(
                                             "Number of words: %d",
-                                            testData.getExpectedOutput().getExpectedWordCount()
+                                            testData.expectedWordCount()
                                     )
                             );
                 }

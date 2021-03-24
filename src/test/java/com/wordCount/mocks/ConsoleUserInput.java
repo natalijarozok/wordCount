@@ -1,8 +1,8 @@
 package com.wordCount.mocks;
 
-import com.wordcount.readers.UserInputReader;
+import com.wordcount.inputOutput.input.UserInputSource;
 
-public class UserInputReaderStub implements UserInputReader {
+public class ConsoleUserInput implements UserInputSource {
 
     private String inputText;
 
@@ -11,7 +11,7 @@ public class UserInputReaderStub implements UserInputReader {
         return inputText;
     }
 
-    public void setup(String inputText) {
+    public void returns(String inputText) {
         this.inputText = inputText;
     }
 }

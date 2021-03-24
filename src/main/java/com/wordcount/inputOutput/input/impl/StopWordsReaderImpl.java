@@ -1,7 +1,7 @@
-package com.wordcount.readers.impl;
+package com.wordcount.inputOutput.input.impl;
 
 import com.wordcount.domain.WordCounter;
-import com.wordcount.readers.StopWordsReader;
+import com.wordcount.inputOutput.input.StopWordsReader;
 
 import java.io.BufferedReader;
 import java.io.File;

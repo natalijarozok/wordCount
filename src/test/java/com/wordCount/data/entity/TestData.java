@@ -1,16 +1,22 @@
 package com.wordCount.data.entity;
 
+import java.util.List;
+
 public class TestData {
     private final TestInput testInput;
 
-    public TestInput getTestInput() {
-        return testInput;
+    public String inputText() {
+        return testInput.getInputText();
+    }
+
+    public List<String> stopWords() {
+        return testInput.getStopWords();
     }
 
     private final ExpectedOutput expectedOutput;
 
-    public ExpectedOutput getExpectedOutput() {
-        return expectedOutput;
+    public long expectedWordCount() {
+        return expectedOutput.getExpectedWordCount();
     }
 
     public TestData(TestInput input, ExpectedOutput expectedOutput) {

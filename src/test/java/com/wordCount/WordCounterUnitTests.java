@@ -17,10 +17,10 @@ public class WordCounterUnitTests {
 
 
     private void assertInputWordCountEqualsToExpectedWordCount(TestData testData) {
-        WordCounter sut = new WordCounter(testData.getTestInput().getStopWords());
-        long actualWordCount = sut.countWords(testData.getTestInput().getInputText());
+        WordCounter sut = new WordCounter(testData.stopWords());
+        long actualWordCount = sut.countWords(testData.inputText());
         assertEquals(
-                testData.getExpectedOutput().getExpectedWordCount(),
+                testData.expectedWordCount(),
                 actualWordCount,
                 errorMessageFor(testData)
         );

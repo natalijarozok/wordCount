@@ -72,16 +72,16 @@ public class DataSource {
 
     public static String errorMessageFor(TestData testData) {
         return format("Input text: '%s' with stopWords '%s' is expected to contain '%d' words",
-                testData.getTestInput().getInputText(),
-                testData.getTestInput().getStopWords(),
-                testData.getExpectedOutput().getExpectedWordCount()
+                testData.inputText(),
+                testData.stopWords(),
+                testData.expectedWordCount()
         );
     }
 
-    public static String errorMessageFor(TestInput testInput, String expectedOutputText) {
+    public static String errorMessageFor(TestData testData, String expectedOutputText) {
         return format("For given input text: '%s' with stopWords '%s' following output text: '%s' is expected",
-                testInput.getInputText(),
-                testInput.getStopWords(),
+                testData.inputText(),
+                testData.stopWords(),
                 expectedOutputText
         );
     }

@@ -1,16 +1,18 @@
 package com.wordcount;
 
 import com.wordcount.controllers.WordCounterController;
-import com.wordcount.readers.ConsoleReader;
-import com.wordcount.readers.StopWordsReader;
-import com.wordcount.readers.UserInputReader;
-import com.wordcount.readers.impl.ConsoleReaderImpl;
-import com.wordcount.readers.impl.StopWordsReaderImpl;
-import com.wordcount.readers.impl.UserInputReaderImpl;
-import com.wordcount.writers.ConsoleWriter;
-import com.wordcount.writers.UserOutputWriter;
-import com.wordcount.writers.impl.ConsoleWriterImpl;
-import com.wordcount.writers.impl.UserOutputWriterImpl;
+import com.wordcount.inputOutput.IOCommunicator;
+import com.wordcount.inputOutput.impl.IOCommunicatorImpl;
+import com.wordcount.inputOutput.input.StopWordsReader;
+import com.wordcount.inputOutput.input.UserInputReader;
+import com.wordcount.inputOutput.input.UserInputSource;
+import com.wordcount.inputOutput.input.impl.ConsoleUserInput;
+import com.wordcount.inputOutput.input.impl.StopWordsReaderImpl;
+import com.wordcount.inputOutput.input.impl.UserInputReaderImpl;
+import com.wordcount.inputOutput.output.UserOutputSource;
+import com.wordcount.inputOutput.output.UserOutputWriter;
+import com.wordcount.inputOutput.output.impl.ConsoleUserOutput;
+import com.wordcount.inputOutput.output.impl.UserOutputWriterImpl;
 
 public class WordCount {
 
@@ -21,11 +23,17 @@ public class WordCount {
         InputReader stopWordsReader = new InputReaderFactory(STOP_WORDS_FILE_NAME).create();
         ConsoleReader consoleReader = new ConsoleReaderImpl();
         UserInputReader inputReader = new UserInputReaderImpl(consoleReader);
-        StopWordsReader stopWordsReader = new StopWordsReaderImpl();
-        ConsoleWriter consoleWriter = new ConsoleWriterImpl();
-        UserOutputWriter outputWriter = new UserOutputWriterImpl(consoleWriter);
+        UserInputSource userInputSource = new ConsoleUserInput();
+        UserInputReader inputReader = new UserInputReaderImpl(userInputSource);
 
-        WordCounterController controller = new WordCounterController(inputReader, stopWordsReader, outputWriter);
+        UserOutputSource userOutputSource = new ConsoleUserOutput();
+        UserOutputWriter outputWriter = new UserOutputWriterImpl(userOutputSource);
+
+        IOCommunicator userCommunicator = new IOCommunicatorImpl(inputReader, outputWriter);
+
+        StopWordsReader stopWordsReader = new StopWordsReaderImpl();
+
+        WordCounterController controller = new WordCounterController(userCommunicator, stopWordsReader);
         controller.countWords();
     }
 
