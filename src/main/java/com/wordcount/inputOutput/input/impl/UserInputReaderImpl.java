@@ -5,7 +5,7 @@ import com.wordcount.inputOutput.input.UserInputSource;
 
 public class UserInputReaderImpl implements UserInputReader {
 
-    private UserInputSource reader;
+    private final UserInputSource reader;
 
     public UserInputReaderImpl(UserInputSource reader) {
         this.reader = reader;

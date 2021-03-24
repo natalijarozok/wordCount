@@ -8,8 +8,8 @@ public class ConsoleUserInput implements UserInputSource {
 
     @Override
     public String read() {
-        System.out.print("Enter text: ");
-        String text = new Scanner(System.in).nextLine();
-        return text;
+        String startText = "Enter text: ";
+        System.out.print(startText);
+        return new Scanner(System.in).nextLine();
     }
 }

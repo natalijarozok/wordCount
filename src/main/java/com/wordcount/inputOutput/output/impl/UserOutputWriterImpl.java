@@ -5,7 +5,7 @@ import com.wordcount.inputOutput.output.UserOutputWriter;
 
 public class UserOutputWriterImpl implements UserOutputWriter {
 
-    private UserOutputSource writer;
+    private final UserOutputSource writer;
 
     public UserOutputWriterImpl(UserOutputSource writer) {
         this.writer = writer;

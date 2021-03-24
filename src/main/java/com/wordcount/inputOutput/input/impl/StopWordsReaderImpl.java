@@ -13,7 +13,14 @@ import java.util.List;
 
 public class StopWordsReaderImpl implements StopWordsReader {
 
-    private final String STOP_WORDS_FILE_NAME = "stopwords.txt";
+    private String stopWordsFileName = "stopwords.txt";
+
+    public StopWordsReaderImpl() {
+    }
+
+    public StopWordsReaderImpl(String stopWordsFileName) {
+        this.stopWordsFileName = stopWordsFileName;
+    }
 
     @Override
     public List<String> read() {
@@ -26,16 +33,18 @@ public class StopWordsReaderImpl implements StopWordsReader {
             while ((line = bufferedReader.readLine()) != null) {
                 stopWords.add(line);
             }
-        } catch (Exception e) {
-            String errorMessage = e.getMessage();
+        } catch (Error ignored) {
+
+        } catch (Exception ignored) {
+
         }
-        ;
 
         return stopWords;
     }
 
     private BufferedReader getStopWordsFilerReader() throws FileNotFoundException {
-        URL fileUrl = WordCounter.class.getClassLoader().getResource(STOP_WORDS_FILE_NAME);
+        URL fileUrl = WordCounter.class.getClassLoader().getResource(stopWordsFileName);
+        assert fileUrl != null;
         File file = new File(fileUrl.getFile());
         return new BufferedReader(new FileReader(file));
     }

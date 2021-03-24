@@ -6,9 +6,9 @@ import com.wordcount.inputOutput.output.UserOutputWriter;
 
 public class IOCommunicatorImpl implements IOCommunicator {
 
-    private UserInputReader inputReader;
+    private final UserInputReader inputReader;
 
-    private UserOutputWriter outputWriter;
+    private final UserOutputWriter outputWriter;
 
     public IOCommunicatorImpl(UserInputReader inputReader, UserOutputWriter outputWriter) {
         this.inputReader = inputReader;
