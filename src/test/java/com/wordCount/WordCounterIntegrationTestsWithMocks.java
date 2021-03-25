@@ -8,7 +8,7 @@ import com.wordcount.userInterface.UserInterface;
 import com.wordcount.inputOutput.input.InputReader;
 import com.wordcount.inputOutput.input.impl.InputResourcesReader;
 import com.wordcount.inputOutput.output.OutputWriter;
-import com.wordcount.inputOutput.output.impl.OutputWriterImpl;
+import com.wordcount.inputOutput.output.impl.OutputConsoleWriter;
 import com.wordcount.userInterface.impl.UserCommunicator;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +22,7 @@ public class WordCounterIntegrationTestsWithMocks {
         InputReader inputReader = new InputResourcesReader(inputSource);
 
         TestOutputSource outputSource = new TestOutputSource();
-        OutputWriter outputWriter = new OutputWriterImpl(outputSource);
+        OutputWriter outputWriter = new OutputConsoleWriter(outputSource);
 
         UserInterface ioCommunicator = new UserCommunicator(inputReader, outputWriter);
 

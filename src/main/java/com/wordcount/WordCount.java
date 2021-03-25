@@ -11,7 +11,7 @@ import com.wordcount.inputOutput.input.impl.InputResourcesReader;
 import com.wordcount.inputOutput.output.OutputSource;
 import com.wordcount.inputOutput.output.OutputWriter;
 import com.wordcount.inputOutput.output.impl.ConsoleOutput;
-import com.wordcount.inputOutput.output.impl.OutputWriterImpl;
+import com.wordcount.inputOutput.output.impl.OutputConsoleWriter;
 import com.wordcount.userInterface.UserInterface;
 import com.wordcount.userInterface.impl.UserCommunicator;
 
@@ -26,7 +26,7 @@ public class WordCount {
         InputReader inputReader = new InputResourcesReader(userInputSource);
 
         OutputSource userOutputSource = new ConsoleOutput();
-        OutputWriter outputWriter = new OutputWriterImpl(userOutputSource);
+        OutputWriter outputWriter = new OutputConsoleWriter(userOutputSource);
 
         UserInterface userCommunicator = new UserCommunicator(inputReader, outputWriter);
 

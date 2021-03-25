@@ -3,11 +3,11 @@ package com.wordcount.inputOutput.output.impl;
 import com.wordcount.inputOutput.output.OutputSource;
 import com.wordcount.inputOutput.output.OutputWriter;
 
-public class OutputWriterImpl implements OutputWriter {
+public class OutputConsoleWriter implements OutputWriter {
 
     private final OutputSource writer;
 
-    public OutputWriterImpl(OutputSource writer) {
+    public OutputConsoleWriter(OutputSource writer) {
         this.writer = writer;
     }
 
