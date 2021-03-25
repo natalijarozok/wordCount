@@ -1,12 +1,12 @@
 package com.wordCount.mocks;
 
 import com.wordCount.data.entity.TestData;
-import com.wordcount.inputOutput.output.UserOutputSource;
+import com.wordcount.inputOutput.output.OutputSource;
 
 import static com.wordCount.data.DataSource.errorMessageFor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ConsoleUserOutput implements UserOutputSource {
+public class TestOutputSource implements OutputSource {
 
     private String outputText;
     private TestData testData;
@@ -16,7 +16,7 @@ public class ConsoleUserOutput implements UserOutputSource {
         this.outputText = outputText;
     }
 
-    public ConsoleUserOutput forUserInput(TestData testData) {
+    public TestOutputSource forUserInput(TestData testData) {
         this.testData = testData;
         return this;
     }

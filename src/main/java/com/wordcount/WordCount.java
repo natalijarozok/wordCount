@@ -1,47 +1,40 @@
 package com.wordcount;
 
 import com.wordcount.controllers.WordCounterController;
-import com.wordcount.inputOutput.IOCommunicator;
-import com.wordcount.inputOutput.impl.IOCommunicatorImpl;
-import com.wordcount.inputOutput.input.StopWordsReader;
-import com.wordcount.inputOutput.input.UserInputReader;
-import com.wordcount.inputOutput.input.UserInputSource;
-import com.wordcount.inputOutput.input.impl.ConsoleUserInput;
-import com.wordcount.inputOutput.input.impl.StopWordsReaderImpl;
-import com.wordcount.inputOutput.input.impl.UserInputReaderImpl;
-import com.wordcount.inputOutput.output.UserOutputSource;
-import com.wordcount.inputOutput.output.UserOutputWriter;
-import com.wordcount.inputOutput.output.impl.ConsoleUserOutput;
-import com.wordcount.inputOutput.output.impl.UserOutputWriterImpl;
+import com.wordcount.factory.InputSourceFactory;
+import com.wordcount.inputOutput.InputParametersParser;
+import com.wordcount.inputOutput.dto.InputSourceInfo;
+import com.wordcount.inputOutput.enums.InputSourceType;
+import com.wordcount.inputOutput.input.InputReader;
+import com.wordcount.inputOutput.input.InputSource;
+import com.wordcount.inputOutput.input.impl.InputResourcesReader;
+import com.wordcount.inputOutput.output.OutputSource;
+import com.wordcount.inputOutput.output.OutputWriter;
+import com.wordcount.inputOutput.output.impl.ConsoleOutput;
+import com.wordcount.inputOutput.output.impl.OutputWriterImpl;
+import com.wordcount.userInterface.UserInterface;
+import com.wordcount.userInterface.impl.UserCommunicator;
 
 public class WordCount {
 
-    private static final String STOP_WORDS_FILE_NAME = "stopwords.txt";
+    public static String STOP_WORDS_FILE_NAME = "stopwords.txt";
 
     public static void main(String[] args) {
-        InputReader textReader = new InputReaderFactory(getInputTextFileName(args)).create();
-        InputReader stopWordsReader = new InputReaderFactory(STOP_WORDS_FILE_NAME).create();
-        ConsoleReader consoleReader = new ConsoleReaderImpl();
-        UserInputReader inputReader = new UserInputReaderImpl(consoleReader);
-        UserInputSource userInputSource = new ConsoleUserInput();
-        UserInputReader inputReader = new UserInputReaderImpl(userInputSource);
+        InputParametersParser parser = new InputParametersParser(args);
 
-        UserOutputSource userOutputSource = new ConsoleUserOutput();
-        UserOutputWriter outputWriter = new UserOutputWriterImpl(userOutputSource);
+        InputSource userInputSource = new InputSourceFactory().create(parser.getInputSourceInfo());
+        InputReader inputReader = new InputResourcesReader(userInputSource);
 
-        IOCommunicator userCommunicator = new IOCommunicatorImpl(inputReader, outputWriter);
+        OutputSource userOutputSource = new ConsoleOutput();
+        OutputWriter outputWriter = new OutputWriterImpl(userOutputSource);
 
-        StopWordsReader stopWordsReader = new StopWordsReaderImpl();
+        UserInterface userCommunicator = new UserCommunicator(inputReader, outputWriter);
+
+        InputSourceInfo stopWordsSourceInfo = new InputSourceInfo(InputSourceType.FILE, STOP_WORDS_FILE_NAME);
+        InputSource stopWordsInputSource = new InputSourceFactory().create(stopWordsSourceInfo);
+        InputReader stopWordsReader = new InputResourcesReader(stopWordsInputSource);
 
         WordCounterController controller = new WordCounterController(userCommunicator, stopWordsReader);
         controller.countWords();
-    }
-
-    private static String getInputTextFileName(String[] args) {
-        String fileName = "";
-        if (args.length > 0) {
-            fileName = args[0];
-        }
-        return fileName;
     }
 }

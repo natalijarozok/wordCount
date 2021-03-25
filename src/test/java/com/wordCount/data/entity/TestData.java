@@ -1,12 +1,13 @@
 package com.wordCount.data.entity;
 
+import java.util.Collections;
 import java.util.List;
 
 public class TestData {
     private final TestInput testInput;
 
-    public String inputText() {
-        return testInput.getInputText();
+    public List<String> inputText() {
+        return Collections.singletonList(testInput.getInputText());
     }
 
     public List<String> stopWords() {

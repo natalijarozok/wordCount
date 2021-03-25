@@ -15,16 +15,16 @@ public class WordCounter {
         this.stopWords = stopWords != null ? stopWords : Collections.emptyList();
     }
 
-    public long countWords(String text) {
+    public long countWords(List<String> text) {
         List<String> wordCandidates = parse(text);
-        return countWords(wordCandidates);
+        return countWordsAmongCandidates(wordCandidates);
     }
 
-    private List<String> parse(String text) {
+    private List<String> parse(List<String> text) {
         return textParser.parse(text);
     }
 
-    private long countWords(List<String> wordCandidates) {
+    private long countWordsAmongCandidates(List<String> wordCandidates) {
         return wordCandidates.stream()
                 .filter(this::isAnAllowedWord)
                 .count();

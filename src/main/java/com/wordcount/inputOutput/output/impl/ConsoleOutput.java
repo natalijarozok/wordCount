@@ -1,9 +1,9 @@
 package com.wordcount.inputOutput.output.impl;
 
 
-import com.wordcount.inputOutput.output.UserOutputSource;
+import com.wordcount.inputOutput.output.OutputSource;
 
-public class ConsoleUserOutput implements UserOutputSource {
+public class ConsoleOutput implements OutputSource {
 
     @Override
     public void write(String text) {

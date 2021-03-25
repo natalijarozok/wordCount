@@ -1,8 +1,10 @@
 package com.wordCount.mocks;
 
+import com.wordcount.inputOutput.input.InputReader;
+
 import java.util.List;
 
-public class StopWordsReader implements com.wordcount.inputOutput.input.StopWordsReader {
+public class StopWordsReader implements InputReader {
 
     private List<String> stopWords;
 

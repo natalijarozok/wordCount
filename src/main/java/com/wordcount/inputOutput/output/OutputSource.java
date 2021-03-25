@@ -1,5 +1,5 @@
 package com.wordcount.inputOutput.output;
 
-public interface UserOutputWriter {
+public interface OutputSource {
     void write(String text);
 }
