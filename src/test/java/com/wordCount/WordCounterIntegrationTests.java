@@ -1,54 +1,115 @@
 package com.wordCount;
 
-import com.wordCount.mocks.*;
-import com.wordCount.paramsSource.TestParam;
-import com.wordCount.paramsSource.TestParamValuesSource;
-import com.wordcount.controllers.WordCounterController;
-import com.wordcount.writers.AnswerWriter;
-import com.wordcount.writers.impl.AnswerWriterImpl;
+import com.wordcount.WordCount;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WordCounterIntegrationTests {
 
-    @Test
-    public void word_counting_in_text_from_console() {
-        ConsoleTextReaderStub readerStub = new ConsoleTextReaderStub();
-        word_counting(readerStub);
+    private final InputStream systemIn = System.in;
+    private final PrintStream systemOut = System.out;
+
+    private ByteArrayOutputStream testOut;
+
+    @BeforeEach
+    public void setupConsoleOutput() {
+        testOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(testOut));
+    }
+
+    private void provideConsoleInput(String data) {
+        ByteArrayInputStream testIn = new ByteArrayInputStream(data.getBytes());
+        System.setIn(testIn);
+    }
+
+    private String actualConsoleOutput() {
+        String outputStartText = "Enter text: ";
+        return testOut.toString().replace(outputStartText, "");
+    }
+
+    @AfterEach
+    public void restoreSystemInputOutput() {
+        System.setIn(systemIn);
+        System.setOut(systemOut);
     }
 
     @Test
-    public void word_counting_in_text_from_file() {
-        FileTextReaderReaderStub readerStub = new FileTextReaderReaderStub();
-        word_counting(readerStub);
+    public void count_words_from_console_with_existing_stop_words_file() {
+        String inputText = "Mary had a little lamb";
+        provideConsoleInput(inputText);
+        String expectedOutput = String.format("Number of words: %d\n", 4);
+
+        String[] inputParams = new String[0];
+        WordCount.STOP_WORDS_FILE_NAME = "stopwords.txt";
+        WordCount.main(inputParams);
+
+        assertEquals(expectedOutput, actualConsoleOutput());
     }
 
-    private void word_counting(TextReaderStub readerStub) {
-        List<String> text;
-        List<String> stopWords;
-        int wordCount;
+    @Test
+    public void count_words_from_console_with_empty_stop_words_file() {
+        String inputText = "Mary had a little lamb";
+        provideConsoleInput(inputText);
+        String expectedOutput = String.format("Number of words: %d\n", 5);
 
-        StopWordsReaderStub stopWordsReaderStub = new StopWordsReaderStub();
-        ConsoleWriterSpy consoleWriterSpy = new ConsoleWriterSpy();
-        AnswerWriter answerWriter = new AnswerWriterImpl(consoleWriterSpy);
+        String[] inputParams = new String[0];
+        WordCount.STOP_WORDS_FILE_NAME = "stop_words_empty.txt";
+        WordCount.main(inputParams);
 
-        HashMap<TestParam, Integer> params = TestParamValuesSource.getTextParamValues();
+        assertEquals(expectedOutput, actualConsoleOutput());
+    }
 
-        for (Map.Entry<TestParam, Integer> param : params.entrySet()) {
-            text = param.getKey().getInputText();
-            stopWords = param.getKey().getStopWords();
-            wordCount = param.getValue();
+    @Test
+    public void count_words_from_console_with_missing_stop_words_file() {
+        String inputText = "Mary had a little lamb";
+        provideConsoleInput(inputText);
+        String expectedOutput = String.format("Number of words: %d\n", 5);
 
-            readerStub.setup(text);
-            stopWordsReaderStub.setup(stopWords);
+        String[] inputParams = new String[0];
+        WordCount.STOP_WORDS_FILE_NAME = "missing_stop_words_file.txt";
+        WordCount.main(inputParams);
 
-            WordCounterController sut = new WordCounterController(readerStub, stopWordsReaderStub, answerWriter);
-            sut.countWords();
+        assertEquals(expectedOutput, actualConsoleOutput());
+    }
 
-            consoleWriterSpy.shouldWriteText(String.format("Number of words: %d", wordCount));
-        }
+    @Test
+    public void count_words_from_file_with_existing_stop_words_file() {
+        String expectedOutput = String.format("Number of words: %d\n", 4);
+
+        String[] inputParams = {"mytext.txt"};
+        WordCount.STOP_WORDS_FILE_NAME = "stopwords.txt";
+        WordCount.main(inputParams);
+
+        assertEquals(expectedOutput, actualConsoleOutput());
+    }
+
+    @Test
+    public void count_words_from_file_with_empty_stop_words_file() {
+        String expectedOutput = String.format("Number of words: %d\n", 5);
+
+        String[] inputParams = {"mytext.txt"};
+        WordCount.STOP_WORDS_FILE_NAME = "stop_words_empty.txt";
+        WordCount.main(inputParams);
+
+        assertEquals(expectedOutput, actualConsoleOutput());
+    }
+
+    @Test
+    public void count_words_from_file_with_missing_stop_words_file() {
+        String expectedOutput = String.format("Number of words: %d\n", 5);
+
+        String[] inputParams = {"mytext.txt"};
+        WordCount.STOP_WORDS_FILE_NAME = "missing_stop_words_file.txt";
+        WordCount.main(inputParams);
+
+        assertEquals(expectedOutput, actualConsoleOutput());
     }
 }

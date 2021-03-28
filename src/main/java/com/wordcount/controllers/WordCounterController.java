@@ -1,49 +1,45 @@
 package com.wordcount.controllers;
 
 import com.wordcount.domain.WordCounter;
-import com.wordcount.readers.InputReader;
-import com.wordcount.writers.AnswerWriter;
+import com.wordcount.userInterface.UserInterface;
+import com.wordcount.inputOutput.input.InputReader;
 
 import java.util.List;
 
 public class WordCounterController {
 
-    private InputReader _reader;
-    private InputReader _stopWordsReader;
-    private AnswerWriter _writer;
+    private final UserInterface userCommunicator;
+    private final InputReader stopWordsReader;
 
     public WordCounterController(
-            InputReader reader,
-            InputReader stopWordsreader,
-            AnswerWriter writer
+            UserInterface userCommunicator,
+            InputReader stopWordsReader
     ) {
-        _reader = reader;
-        _stopWordsReader = stopWordsreader;
-        _writer = writer;
+        this.userCommunicator = userCommunicator;
+        this.stopWordsReader = stopWordsReader;
     }
 
     public void countWords() {
         List<String> inputText = readText();
         List<String> stopWords = readStopWords();
-        int wordCount = countWords(inputText, stopWords);
+        long wordCount = countWords(inputText, stopWords);
         writeWordCount(wordCount);
     }
 
     private List<String> readText() {
-
-        return _reader.read();
+        return userCommunicator.read();
     }
 
     private List<String> readStopWords() {
-        return _stopWordsReader.read();
+        return stopWordsReader.read();
     }
 
-    private int countWords(List<String> text, List<String> stopWords) {
-        WordCounter wordCounter = new WordCounter(text, stopWords);
-        return wordCounter.count();
+    private long countWords(List<String> text, List<String> stopWords) {
+        WordCounter wordCounter = new WordCounter(stopWords);
+        return wordCounter.countWords(text);
     }
 
-    private void writeWordCount(int wordCount) {
-        _writer.write(wordCount);
+    private void writeWordCount(long wordCount) {
+        userCommunicator.write(String.valueOf(wordCount));
     }
 }

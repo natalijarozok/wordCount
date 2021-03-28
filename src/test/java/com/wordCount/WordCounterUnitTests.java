@@ -1,39 +1,28 @@
 package com.wordCount;
 
-import com.wordCount.paramsSource.TestParam;
-import com.wordCount.paramsSource.TestParamValuesSource;
+import com.wordCount.data.entity.TestData;
 import com.wordcount.domain.WordCounter;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import static com.wordCount.data.DataSource.errorMessageFor;
+import static com.wordCount.data.DataSource.getData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class WordCounterUnitTests {
 
     @Test
-    public void word_counting() {
-        List<String> text;
-        List<String> stopWords;
-        int wordCount;
-
-        HashMap<TestParam, Integer> params = TestParamValuesSource.getTextParamValues();
-
-        for (Map.Entry<TestParam, Integer> param : params.entrySet()) {
-            text = param.getKey().getInputText();
-            stopWords = param.getKey().getStopWords();
-            wordCount = param.getValue().intValue();
-            checkThatWordsCountIsCorrect(text, stopWords, wordCount);
-        }
+    public void count_words() {
+        getData().forEach(this::assertInputWordCountEqualsToExpectedWordCount);
     }
 
 
-    private void checkThatWordsCountIsCorrect(List<String> text, List<String> stopWords, Integer wordCountExpected) {
-        WordCounter sut = new WordCounter(text, stopWords);
-        int wordCountActual = sut.count();
-        assertEquals(wordCountExpected, wordCountActual);
+    private void assertInputWordCountEqualsToExpectedWordCount(TestData testData) {
+        WordCounter sut = new WordCounter(testData.stopWords());
+        long actualWordCount = sut.countWords(testData.inputText());
+        assertEquals(
+                testData.expectedWordCount(),
+                actualWordCount,
+                errorMessageFor(testData)
+        );
     }
-
 }

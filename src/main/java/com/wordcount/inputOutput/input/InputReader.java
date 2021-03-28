@@ -1,4 +1,4 @@
-package com.wordcount.readers;
+package com.wordcount.inputOutput.input;
 
 import java.util.List;
 
