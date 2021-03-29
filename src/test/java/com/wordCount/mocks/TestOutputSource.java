@@ -1,7 +1,7 @@
 package com.wordCount.mocks;
 
 import com.wordCount.data.entity.TestData;
-import com.wordcount.inputOutput.output.OutputSource;
+import com.wordcount.interfaces.OutputSource;
 
 import static com.wordCount.data.DataSource.errorMessageFor;
 import static org.junit.jupiter.api.Assertions.assertEquals;

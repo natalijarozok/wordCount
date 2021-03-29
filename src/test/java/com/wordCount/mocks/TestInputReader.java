@@ -1,10 +1,10 @@
 package com.wordCount.mocks;
 
-import com.wordcount.inputOutput.input.InputSource;
+import com.wordcount.interfaces.InputReader;
 
 import java.util.List;
 
-public class TestInputSource implements InputSource {
+public class TestInputReader implements InputReader {
 
     private List<String> inputText;
 

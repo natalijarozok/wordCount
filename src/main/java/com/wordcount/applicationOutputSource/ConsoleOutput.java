@@ -1,7 +1,7 @@
-package com.wordcount.inputOutput.output.impl;
+package com.wordcount.applicationOutputSource;
 
 
-import com.wordcount.inputOutput.output.OutputSource;
+import com.wordcount.interfaces.OutputSource;
 
 public class ConsoleOutput implements OutputSource {
 

@@ -1,8 +1,8 @@
-package com.wordcount.controllers;
+package com.wordcount.mainApp.controller;
 
-import com.wordcount.domain.WordCounter;
-import com.wordcount.userInterface.UserInterface;
-import com.wordcount.inputOutput.input.InputReader;
+import com.wordcount.interfaces.InputReader;
+import com.wordcount.interfaces.UserInterface;
+import com.wordcount.mainApp.domain.WordCounter;
 
 import java.util.List;
 
