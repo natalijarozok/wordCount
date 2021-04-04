@@ -1,7 +1,7 @@
 package com.wordCount;
 
 import com.wordCount.data.entity.TestData;
-import com.wordcount.domain.WordCounter;
+import com.wordcount.mainApp.domain.WordCounter;
 import org.junit.jupiter.api.Test;
 
 import static com.wordCount.data.DataSource.errorMessageFor;

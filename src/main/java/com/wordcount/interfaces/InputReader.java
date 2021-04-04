@@ -1,4 +1,4 @@
-package com.wordcount.inputOutput.input;
+package com.wordcount.interfaces;
 
 import java.util.List;
 

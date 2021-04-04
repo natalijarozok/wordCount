@@ -1,7 +1,7 @@
-package com.wordcount.inputOutput.input.impl;
+package com.wordcount.applicationInputReader;
 
-import com.wordcount.domain.WordCounter;
-import com.wordcount.inputOutput.input.InputSource;
+import com.wordcount.interfaces.InputReader;
+import com.wordcount.mainApp.domain.WordCounter;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,11 +11,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileInputSource implements InputSource {
+public class FileInputReader implements InputReader {
 
     private final String resourceFileName;
 
-    public FileInputSource(String resourceFileName) {
+    public FileInputReader(String resourceFileName) {
         this.resourceFileName = resourceFileName;
     }
 

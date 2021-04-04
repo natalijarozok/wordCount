@@ -1,4 +1,4 @@
-package com.wordcount.domain;
+package com.wordcount.mainApp.domain;
 
 import java.util.Arrays;
 import java.util.Collection;

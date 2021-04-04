@@ -1,12 +1,12 @@
-package com.wordcount.inputOutput.input.impl;
+package com.wordcount.applicationInputReader;
 
-import com.wordcount.inputOutput.input.InputSource;
+import com.wordcount.interfaces.InputReader;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-public class ConsoleInputSource implements InputSource {
+public class ConsoleInputReader implements InputReader {
 
     @Override
     public List<String> read() {

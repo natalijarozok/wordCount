@@ -1,6 +1,6 @@
 package com.wordCount;
 
-import com.wordcount.WordCount;
+import com.wordcount.mainApp.WordCount;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

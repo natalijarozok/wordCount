@@ -1,18 +1,18 @@
-package com.wordcount.userInterface.impl;
+package com.wordcount.applicationUserInterface;
 
-import com.wordcount.inputOutput.input.InputReader;
-import com.wordcount.inputOutput.output.OutputWriter;
-import com.wordcount.userInterface.UserInterface;
+import com.wordcount.interfaces.InputReader;
+import com.wordcount.interfaces.OutputWriter;
+import com.wordcount.interfaces.UserInterface;
 
 import java.util.List;
 
-public class UserCommunicator implements UserInterface {
+public class ApplicationUserInterface implements UserInterface {
 
     private final InputReader inputReader;
 
     private final OutputWriter outputWriter;
 
-    public UserCommunicator(InputReader inputReader, OutputWriter outputWriter) {
+    public ApplicationUserInterface(InputReader inputReader, OutputWriter outputWriter) {
         this.inputReader = inputReader;
         this.outputWriter = outputWriter;
     }
